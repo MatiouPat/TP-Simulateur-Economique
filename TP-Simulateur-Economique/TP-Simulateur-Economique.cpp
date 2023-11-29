@@ -238,13 +238,13 @@ public:
                     symbol = 'x';
                     break;
                 }
-                std::cout << symbol << ' ' << square->getCost() << ' ' << square->getHeuristic() << ' ';
+                printf("%c %.2f %i \t", symbol, square->getCost(), square->getHeuristic());
             }
             std::cout << '\n';
         }
         std::cout << '\n' << std::endl;
     }
-    std::deque < std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY)
+    std::deque<std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY)
     {
         board[startX][startY] = std::shared_ptr<Square>(new Square{ startX, startY, 0, 0, SquareState::TRAVERSABLE });
         board[endX][endY] = std::shared_ptr<Square>(new Square{ endX, endY, sizeX + sizeY, sizeX + sizeY,  SquareState::TRAVERSABLE });
@@ -338,7 +338,6 @@ public:
                     squareCalculed.erase(squareCalculed.begin() + i);
                 }
             }
-            //Trouver l'index d'un noeud
 
         }
         // On refait le chemin pour le noter
@@ -348,41 +347,31 @@ public:
         printChessboard();
         while (traveler->getX() != board[endX][endY]->getX() || traveler->getY() != board[endX][endY]->getY())
         {
-            std::deque<std::shared_ptr<Square>> voisins = neighbours(traveler->getX(), traveler->getX());
-
-            float lowestCost = voisins[0]->getCost();
-            int lowestHeuristic = voisins[0]->getHeuristic();
-            std::shared_ptr<Square> nextStep = voisins[0];
-
-            for (auto& v : voisins)
+            float localCost = sizeX * sizeY;
+            std::shared_ptr<Square> futureNode;
+            /*Recherche du noeud voisin avec le cout le plus faible*/
+            for (int i = -1; i < 2; i = i++)
             {
-                /*std::cout << v->getX() << ',' << v->getY() << std::endl;
-                std::cout << v->getCost() << ' ' << v->getHeuristic() << std::endl;*/
-                float vCost = v->getCost();
-                int vHeuristic = v->getHeuristic();
-                bool isVisited = false;
-
-                std::cout << vCost << " + " << lowestCost << std::endl;
-                if ((vCost < lowestCost) || (vCost == lowestCost && vHeuristic < lowestHeuristic))
+                for (int j = -1; j < 2; j = j++)
                 {
-                    for (int z = 0; z < path.size(); z++)
+                    int cursorX = traveler->getX() + i;
+                    int cursorY = traveler->getY() + j;
+                    if (cursorX >= 0 && cursorX < sizeX && cursorY >= 0 && cursorY < sizeY && (cursorX != traveler->getX() || cursorY != traveler->getY()))
                     {
-                        if (v->getX() == path[z]->getX() && v->getY() == path[z]->getY())
+                        if (std::find(path.begin(), path.end(), board[cursorX][cursorY]) == path.end())
                         {
-                            isVisited = true;
+                            if (board[cursorX][cursorY]->getCost() < localCost && board[cursorX][cursorY]->getState() != SquareState::UNTRAVERSABLE)
+                            {
+                                localCost = board[cursorX][cursorY]->getCost();
+                                futureNode = board[cursorX][cursorY];
+                            }
                         }
-                    }
-                    if (!isVisited)
-                    {
-                        nextStep = v;
-                        lowestCost = vCost;
-                        lowestHeuristic = vHeuristic;
                     }
                 }
             }
             std::cout << "\n" << std::endl;
-            traveler = nextStep;
-            path.push_back(nextStep);
+            traveler = futureNode;
+            path.push_back(futureNode);
         }
         return path;
     }
@@ -418,53 +407,6 @@ public:
         {
             return -1.0;
         }
-    }
-
-    std::deque<std::shared_ptr<Square>> neighbours(int squareX, int squareY)
-    {
-        std::deque<std::shared_ptr<Square>> ptrNeighboursList;
-
-        /*switch (squareX)
-        {
-        case 0:
-            addChessboardCase(NORTH);
-            break;
-        case sizeX:
-            addChessboardCase(SOUTH);
-            break;
-        }
-
-        switch (squareY)
-        {
-        case 0:
-            addChessboardCase(WEST);
-            break;
-        case sizeY:
-            addChessboardCase(EAST);
-            break;
-        }*/
-        std::cout << squareX << ' ' << squareY << std::endl;
-
-        for (int i = -1; i < 2; i = i++)
-        {
-            for (int j = -1; j < 2; j = j++)
-            {
-                if (squareX + i >= 0 && squareX + i < sizeX && squareY + j >= 0 && squareY + j < sizeY)
-                {
-                    if (board[squareX + i][squareY + j]->getState() != SquareState::UNTRAVERSABLE && squareX + i != squareX && squareY + 1 != squareY)
-                    {
-                        ptrNeighboursList.push_back(board[squareX + i][squareY + j]);
-                    }
-                }
-            }
-        }
-
-        for (auto& node : ptrNeighboursList)
-        {
-            std::cout << node->getX() << ',' << node->getY() << std::endl;
-        }
-
-        return ptrNeighboursList;
     }
 protected:
     void shiftColumns()
@@ -630,13 +572,13 @@ void afficherCarte(const std::vector<std::vector<float>>& carte) {
                 character = '#';  // CaractÃ¨re plein pour les basses altitudes
             }
             else if (valeur < -0.6) {
-                character = 'â–“';
+                character = '-';
             }
             else if (valeur < -0.4) {
-                character = 'â–’';
+                character = '-';
             }
             else if (valeur < -0.2) {
-                character = 'â–‘';
+                character = '-';
             }
             else if (valeur < 0.2) {
                 character = '.';
@@ -663,7 +605,7 @@ void afficherCarte(const std::vector<std::vector<float>>& carte) {
 
 int main()
 {
-    const int largeur = 40;
+    /*const int largeur = 40;
     const int hauteur = 20;
     const float frequence = 0.1f;
 
@@ -672,10 +614,10 @@ int main()
     std::cout << "2. Importer une carte depuis un fichier" << std::endl;
 
     int choix;
-    std::cin >> choix;
+    std::cin >> choix;*/
 
     std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
-    board->addChessboardCase(SOUTH_EAST);
+    //board->addChessboardCase(SOUTH_EAST);
     board->printChessboard();
     int startX = 1;
     int startY = 1;
@@ -689,7 +631,7 @@ int main()
     }
     std::cout << " \n" << std::endl;
 
-    if (choix == 1) {
+    /*if (choix == 1) {
         // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
         std::vector<std::vector<float>> carte = genererCarte(largeur, hauteur, frequence);
 
@@ -711,7 +653,7 @@ int main()
     else {
         std::cerr << "Option non valide." << std::endl;
         return 1;
-    }
+    }*/
 
     return 0;
 
