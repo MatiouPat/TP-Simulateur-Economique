@@ -1,5 +1,9 @@
 #include "Square.hpp"
 
+Square::Square()
+{
+}
+
 Square::Square(int _x, int _y, int _cost, int _heuristic, SquareState _state)
 {
     x = _x;
