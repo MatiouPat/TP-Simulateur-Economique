@@ -13,7 +13,74 @@
 #include "Company.hpp"
 #include "PerlinNoise.hpp"
 
-// Fonction pour gÃ©nÃ©rer une carte avec du bruit de Perlin
+#include "SFML/Graphics.hpp"
+
+
+
+void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec)
+{
+    int n = carte.size();
+    int m = carte.at(0).size();
+    int windowSize = n*10;
+    int windowSize2 = m*10;
+    float cellSize = (float)windowSize / n;
+    sf::RenderWindow window(sf::VideoMode(windowSize, windowSize2), "Carte");
+
+    sf::RectangleShape cell;
+    cell.setSize(sf::Vector2f(cellSize, cellSize));
+
+    while (window.isOpen())
+    {
+
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
+        }
+
+        // il faut effacer avant de reafficher
+        window.clear();
+
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < m; ++j)
+            {
+                //Point p = m.getPointByIndexes(i, j);
+
+
+                cell.setSize(sf::Vector2f(cellSize, cellSize));
+                cell.setPosition(j * cellSize, i * cellSize);
+                //cell.setFillColor(sf::Color::White);
+                //cell.setFillColor(0);
+                //cell.setFillColor(0);
+                window.draw(cell);
+
+                std::cout << carte[i][j] << std::endl;
+                //if (!p.passable)
+                //{
+                //    cell.setFillColor(sf::Color::Black);
+                //}
+             
+              
+
+             
+
+
+                cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
+                cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
+                window.draw(cell);
+
+            }
+        }
+
+        window.display();
+    }
+}
+
+// Fonction pour generer une carte avec du bruit de Perlin
 std::vector<std::vector<float>> genererCarte(int largeur, int hauteur, float frequence) {
     std::vector<std::vector<float>> carte(largeur, std::vector<float>(hauteur));
 
@@ -164,19 +231,49 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& nameFil
 }
 
 
+float min(std::vector<std::vector<float>> vec)
+{
+    float min = 100;
+    for (int i = 0; i < vec.size(); ++i)
+    {
+        for (int j = 0; j < vec.at(0).size(); ++j)
+        {
+            if (vec[i][j] < min)
+            {
+                min = vec[i][j];
+            }
+        }
+    }
+    return min;
+}
+float max(std::vector<std::vector<float>> vec)
+{
+    float max = 0;
+    for (int i = 0; i < vec.size(); ++i)
+    {
+        for (int j = 0; j < vec.at(0).size(); ++j)
+        {
+            if (vec[i][j] > max)
+            {
+                max = vec[i][j];
+            }
+        }
+    }
+    return max;
+}
 
 int main()
 {
-    /*const int largeur = 40;
+    const int largeur = 40;
     const int hauteur = 20;
     const float frequence = 0.1f;
 
-    std::cout << "Choisissez une option : " << std::endl;
+    /*std::cout << "Choisissez une option : " << std::endl;
     std::cout << "1. Generer une nouvelle carte" << std::endl;
     std::cout << "2. Importer une carte depuis un fichier" << std::endl;
 
     int choix;
-    std::cin >> choix;*/
+    std::cin >> choix;
 
     std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
     //board->addChessboardCase(SOUTH_EAST);
@@ -192,6 +289,7 @@ int main()
         std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
     }
     std::cout << " \n" << std::endl;
+    */
 
     /*if (choix == 1) {
         // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
@@ -199,7 +297,7 @@ int main()
 
         // Afficher la carte generÃ©e
         std::cout << "Carte gÃ©nÃ©rÃ©e :" << std::endl;
-        afficherCarte(carte);
+        //afficherCarte(carte);
 
         // Exporter la carte vers un fichier
         exporterCarte(carte, "carte.txt");
@@ -210,12 +308,23 @@ int main()
 
         // Afficher la carte importÃ©e
         std::cout << "Carte importÃ©e :" << std::endl;
-        afficherCarte(carteImportee);
+        //afficherCarte(carteImportee);
     }
     else {
         std::cerr << "Option non valide." << std::endl;
         return 1;
     }*/
+
+
+    // Tests affichage graphique
+
+    std::vector<std::vector<float>> carte;
+    carte = genererCarte(40, 40, 0.1f);
+    std::vector<Company> test;
+    afficherCarte(carte, test);
+    std::cout << min(carte) << std::endl;
+    std::cout << max(carte) << std::endl;
+    //printSFML(carte, test);
 
     return 0;
 

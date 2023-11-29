@@ -1,0 +1,20 @@
+﻿  Board.cpp
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\Board.cpp(229,30): warning C4244: 'initialisation' : conversion de 'float' en 'int', perte possible de données
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\Board.cpp(236,65): warning C4244: '=' : conversion de 'float' en 'int', perte possible de données
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\Board.cpp(258,25): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+  Company.cpp
+  Employee.cpp
+  Merchandise.cpp
+  PerlinNoise.cpp
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\PerlinNoise.cpp(42,15): warning C4244: 'initialisation' : conversion de 'float' en 'int', perte possible de données
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\PerlinNoise.cpp(57,16): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+  PrimaryCompany.cpp
+  SecondaryCompany.cpp
+  Square.cpp
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\Square.cpp(11,12): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+  TP-Simulateur-Economique.cpp
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(83,33): warning C4305: '=' : troncation de 'int' à 'char'
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(83,33): warning C4309: '=' : troncation de valeur de constante
+  Transformation.cpp
+  Génération de code en cours...
+  TP-Simulateur-Economique.vcxproj -> E:\POEI\CPP\git\TP-Simulateur-Economique\x64\Debug\TP-Simulateur-Economique.exe
