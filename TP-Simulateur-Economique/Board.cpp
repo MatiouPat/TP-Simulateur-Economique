@@ -237,24 +237,6 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
             }
         }
 
-        /*Recherche du noeud voisin avec le cout le plus faible*/
-        /*int localCost = cursor->getHeuristic();
-        std::shared_ptr<Square> futureNode = cursor;
-        for (int i = -1; i < 2; i = i++)
-        {
-            for (int j = -1; j < 2; j = j++)
-            {
-                if (cursor->getX() + i < sizeX && cursor->getY() + j < sizeY)
-                {
-                    if (board[cursor->getX() + i][cursor->getY() + j]->getHeuristic() < localCost && board[cursor->getX() + i][cursor->getY() + j]->getState() != SquareState::UNTRAVERSABLE)
-                    {
-                        localCost = board[cursor->getX() + i][cursor->getY() + j]->getHeuristic();
-                        futureNode = board[cursor->getX() + i][cursor->getY() + j];
-                    }
-                }
-            }
-        }*/
-
         /*Déplacement vers le noeud avec le cout le plus faible*/
         squareVisited.push_back(cursor);
         cursor = futureNode;
@@ -265,8 +247,6 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
                 squareCalculed.erase(squareCalculed.begin() + i);
             }
         }
-        //Trouver l'index d'un noeud
-
     }
     // On refait le chemin pour le noter
     std::deque<std::shared_ptr<Square>> path;
@@ -275,41 +255,31 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
     printChessboard();
     while (traveler->getX() != board[endX][endY]->getX() || traveler->getY() != board[endX][endY]->getY())
     {
-        std::deque<std::shared_ptr<Square>> voisins = neighbours(traveler->getX(), traveler->getX());
-
-        float lowestCost = voisins[0]->getCost();
-        int lowestHeuristic = voisins[0]->getHeuristic();
-        std::shared_ptr<Square> nextStep = voisins[0];
-
-        for (auto& v : voisins)
+        float localCost = sizeX * sizeY;
+        std::shared_ptr<Square> futureNode;
+        /*Recherche du noeud voisin avec le cout le plus faible*/
+        for (int i = -1; i < 2; i = i++)
         {
-            /*std::cout << v->getX() << ',' << v->getY() << std::endl;
-            std::cout << v->getCost() << ' ' << v->getHeuristic() << std::endl;*/
-            float vCost = v->getCost();
-            int vHeuristic = v->getHeuristic();
-            bool isVisited = false;
-
-            std::cout << vCost << " + " << lowestCost << std::endl;
-            if ((vCost < lowestCost) || (vCost == lowestCost && vHeuristic < lowestHeuristic))
+            for (int j = -1; j < 2; j = j++)
             {
-                for (int z = 0; z < path.size(); z++)
+                int cursorX = traveler->getX() + i;
+                int cursorY = traveler->getY() + j;
+                if (cursorX >= 0 && cursorX < sizeX && cursorY >= 0 && cursorY < sizeY && (cursorX != traveler->getX() || cursorY != traveler->getY()))
                 {
-                    if (v->getX() == path[z]->getX() && v->getY() == path[z]->getY())
+                    if (std::find(path.begin(), path.end(), board[cursorX][cursorY]) == path.end())
                     {
-                        isVisited = true;
+                        if (board[cursorX][cursorY]->getCost() < localCost && board[cursorX][cursorY]->getState() != SquareState::UNTRAVERSABLE)
+                        {
+                            localCost = board[cursorX][cursorY]->getCost();
+                            futureNode = board[cursorX][cursorY];
+                        }
                     }
-                }
-                if (!isVisited)
-                {
-                    nextStep = v;
-                    lowestCost = vCost;
-                    lowestHeuristic = vHeuristic;
                 }
             }
         }
         std::cout << "\n" << std::endl;
-        traveler = nextStep;
-        path.push_back(nextStep);
+        traveler = futureNode;
+        path.push_back(futureNode);
     }
     return path;
 }
