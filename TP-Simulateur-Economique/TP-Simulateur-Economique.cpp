@@ -17,12 +17,12 @@
 
 
 
-void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec)
+void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec, int echelle)
 {
     int n = carte.size();
     int m = carte.at(0).size();
-    int windowSize = n*10;
-    int windowSize2 = m*10;
+    int windowSize = n*echelle;
+    int windowSize2 = m* echelle;
     float cellSize = (float)windowSize / n;
     sf::RenderWindow window(sf::VideoMode(windowSize, windowSize2), "Carte");
 
@@ -50,6 +50,7 @@ void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec)
             {
                 //Point p = m.getPointByIndexes(i, j);
 
+                float newValue = ((carte[i][j] - (-3.8)) / (3.8 - (-3.8))) * 765;
 
                 cell.setSize(sf::Vector2f(cellSize, cellSize));
                 cell.setPosition(j * cellSize, i * cellSize);
@@ -58,16 +59,25 @@ void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec)
                 //cell.setFillColor(0);
                 window.draw(cell);
 
-                std::cout << carte[i][j] << std::endl;
-                //if (!p.passable)
-                //{
-                //    cell.setFillColor(sf::Color::Black);
-                //}
-             
-              
+                //std::cout << carte[i][j] << std::endl;
+                sf::Color color;
+                if (newValue < 255)
+                {
+                    color = sf::Color(0, 0, newValue);
+                }
+                else if (newValue < 510)
+                {
+                    color = sf::Color(0, newValue-255, 255);
+                }
+                else 
+                {
+                    color = sf::Color(newValue-510, 255, 255);
+                }
 
+                cell.setFillColor(color);
+                
              
-
+             
 
                 cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
                 cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
@@ -319,12 +329,12 @@ int main()
     // Tests affichage graphique
 
     std::vector<std::vector<float>> carte;
-    carte = genererCarte(40, 40, 0.1f);
+    carte = genererCarte(100, 100, 0.1f);
     std::vector<Company> test;
-    afficherCarte(carte, test);
+    //afficherCarte(carte, test);
     std::cout << min(carte) << std::endl;
     std::cout << max(carte) << std::endl;
-    //printSFML(carte, test);
+    printSFML(carte, test, 5);
 
     return 0;
 
