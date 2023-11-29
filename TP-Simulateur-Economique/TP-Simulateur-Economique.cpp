@@ -71,6 +71,38 @@ std::vector<std::vector<float>> importerCarte(const std::string& nomFichier) {
     return carte;
 }
 
+// Fonction pour importer la liste des entreprises depuis un fichier
+std::vector<std::vector<std::string>> importCompanies(const std::string& nameFile) {
+    std::vector<std::vector<std::string>> listCompanies;
+    std::vector<std::string> row;
+    std::string line, word;
+    std::ifstream fichier(nameFile);
+
+    if (fichier.is_open()) {
+        while (fichier >> line) {
+            row.clear();
+            std::stringstream str(line);
+            while (getline(str, word, ';'))
+            {
+                row.push_back(word);
+            }
+            listCompanies.push_back(row);
+        }
+        std::cout << "Import successful from : " << nameFile << std::endl;
+    }
+    else {
+        std::cerr << "Error from importing." << std::endl;
+    }
+    for (int i = 0; i < listCompanies.size(); i++)
+    {
+        for (int j = 0; j < listCompanies[i].size(); j++)
+        {
+            std::cout << listCompanies[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+    r
+
 // Fonction pour afficher la carte
 void afficherCarte(const std::vector<std::vector<float>>& carte) {
     for (const auto& ligne : carte) {
