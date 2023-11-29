@@ -5,5 +5,11 @@
 
 class PrimaryCompany : public Company
 {
+public:
+
+	void create();
+
+private:
 
 };
+
