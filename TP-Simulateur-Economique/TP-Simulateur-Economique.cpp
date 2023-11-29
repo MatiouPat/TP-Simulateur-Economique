@@ -12,7 +12,6 @@
 #include "Company.hpp"
 #include "PerlinNoise.hpp"
 
-
 // Fonction pour gÃ©nÃ©rer une carte avec du bruit de Perlin
 std::vector<std::vector<float>> genererCarte(int largeur, int hauteur, float frequence) {
     std::vector<std::vector<float>> carte(largeur, std::vector<float>(hauteur));
@@ -83,13 +82,13 @@ void afficherCarte(const std::vector<std::vector<float>>& carte) {
                 character = '#';  // CaractÃ¨re plein pour les basses altitudes
             }
             else if (valeur < -0.6) {
-                character = 'H';
+                character = '-';
             }
             else if (valeur < -0.4) {
-                character = 'h';
+                character = '-';
             }
             else if (valeur < -0.2) {
-                character = 'h';
+                character = '-';
             }
             else if (valeur < 0.2) {
                 character = '.';
@@ -116,7 +115,7 @@ void afficherCarte(const std::vector<std::vector<float>>& carte) {
 
 int main()
 {
-    const int largeur = 40;
+    /*const int largeur = 40;
     const int hauteur = 20;
     const float frequence = 0.1f;
 
@@ -125,10 +124,10 @@ int main()
     std::cout << "2. Importer une carte depuis un fichier" << std::endl;
 
     int choix;
-    std::cin >> choix;
+    std::cin >> choix;*/
 
     std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
-    board->addChessboardCase(SOUTH_EAST);
+    //board->addChessboardCase(SOUTH_EAST);
     board->printChessboard();
     int startX = 1;
     int startY = 1;
@@ -142,7 +141,7 @@ int main()
     }
     std::cout << " \n" << std::endl;
 
-    if (choix == 1) {
+    /*if (choix == 1) {
         // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
         std::vector<std::vector<float>> carte = genererCarte(largeur, hauteur, frequence);
 
@@ -164,7 +163,7 @@ int main()
     else {
         std::cerr << "Option non valide." << std::endl;
         return 1;
-    }
+    }*/
 
     return 0;
 
