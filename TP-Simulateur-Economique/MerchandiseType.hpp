@@ -1,0 +1,5 @@
+enum MerchandiseType
+{
+	RAW, 
+	CONSUMMABLE,
+};
