@@ -16,6 +16,10 @@ public:
 	Company();
 	Company(std::string name, unsigned int niveau, double capital, Square position, std::vector<Employee> listEmployee, std::map<int, Merchandise> stock);
 	~Company();
+	std::string getName();
+	int getPositionX();
+	int getPositionY();
+
 
 private:
 

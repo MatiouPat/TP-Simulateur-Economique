@@ -2,6 +2,7 @@
 #include <deque>
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include <cmath>
 #include <algorithm>
 
@@ -43,6 +44,64 @@ void exporterCarte(const std::vector<std::vector<float>>& carte, const std::stri
     }
     else {
         std::cerr << "Erreur lors de l'exportation du fichier." << std::endl;
+    }
+}
+
+
+void afficherCarte(const std::vector<std::vector<float>>& carte,  std::vector<Company>& entreprises) {
+    for (int y = 0; y < carte[0].size(); ++y) {
+        for (int x = 0; x < carte.size(); ++x) {
+            char character = ' ';
+
+            auto it = std::find_if(entreprises.begin(), entreprises.end(),
+                [x, y](Company& e) { return e.getPositionX() == x && e.getPositionY() == y; });
+
+            if (it != entreprises.end()) {
+                if (it->getName() == "scierie") {
+                    character = 'S';
+                }
+                else if (it->getName() == "usine_meuble") {
+                    character = 'M';
+                }
+                else if (it->getName() == "ferme_coton") {
+                    character = 'C';
+                }
+                else if (it->getName() == "usine_textile") {
+                    character = 'T';
+                }
+                else if (it->getName() == "usine_bateaux") {
+                    character = 'B';
+                }
+            }
+            else {
+                float valeur = carte[x][y];
+
+                if (valeur < -0.8) {
+                    character = '#';
+                }
+                else if (valeur < -0.2) {
+                    character = '°';
+                }
+                else if (valeur < 0.2) {
+                    character = '.';
+                }
+                else if (valeur < 0.4) {
+                    character = ',';
+                }
+                else if (valeur < 0.6) {
+                    character = ':';
+                }
+                else if (valeur < 0.8) {
+                    character = ';';
+                }
+                else {
+                    character = '!';
+                }
+            }
+
+            std::cout << character << ' ';
+        }
+        std::cout << std::endl;
     }
 }
 
@@ -101,48 +160,9 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& nameFil
         }
         std::cout << "\n";
     }
-    r
-
-// Fonction pour afficher la carte
-void afficherCarte(const std::vector<std::vector<float>>& carte) {
-    for (const auto& ligne : carte) {
-        for (float valeur : ligne) {
-            char character = ' ';
-
-            // Utiliser diffÃ©rents caractÃ¨res pour reprÃ©senter les hauteurs
-            if (valeur < -0.8) {
-                character = '#';  // CaractÃ¨re plein pour les basses altitudes
-            }
-            else if (valeur < -0.6) {
-                character = '-';
-            }
-            else if (valeur < -0.4) {
-                character = '-';
-            }
-            else if (valeur < -0.2) {
-                character = '-';
-            }
-            else if (valeur < 0.2) {
-                character = '.';
-            }
-            else if (valeur < 0.4) {
-                character = ':';
-            }
-            else if (valeur < 0.6) {
-                character = 'o';
-            }
-            else if (valeur < 0.8) {
-                character = 'O';
-            }
-            else {
-                character = '#';  // CaractÃ¨re plein pour les hautes altitudes
-            }
-
-            std::cout << character << ' ';
-        }
-        std::cout << std::endl;
-    }
+    return listCompanies;
 }
+
 
 
 int main()

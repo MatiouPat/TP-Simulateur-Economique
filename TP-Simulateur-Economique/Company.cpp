@@ -15,3 +15,18 @@ Company::Company(std::string name, unsigned int niveau, double capital, Square p
 Company::~Company()
 {
 }
+
+std::string Company::getName()
+{
+    return name;
+}
+
+int Company::getPositionX()
+{
+    return position.getX();
+}
+
+int Company::getPositionY()
+{
+    return position.getY();
+}
