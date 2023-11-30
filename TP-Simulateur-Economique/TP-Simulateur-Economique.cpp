@@ -117,10 +117,26 @@ int main()
     b.generateMap(0.05f);
 
 
-    // Creation des Company
-    std::shared_ptr<Company> c = std::make_shared<Company>(Company("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
-    b.addCompany(c, 1, 2);
+    // Creation des Merchandise
+    Merchandise bois1("Bois", 100.0f, std::vector<MerchandiseType>(MerchandiseType::RAW));
+    Merchandise planche1("Planche", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
 
+    // Creation des Company
+    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    std::shared_ptr<SecondaryCompany> c2 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de bateau", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    std::shared_ptr<PrimaryCompany> c3 = std::make_shared<PrimaryCompany>(PrimaryCompany("Ferme a coton", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    std::shared_ptr<SecondaryCompany> c4 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de textile", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    std::shared_ptr<SecondaryCompany> c5 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+
+    b.addCompany(scierie1, 1, 2);
+    b.addCompany(c2, 10, 3);
+    b.addCompany(c3, 6, 6);
+    b.addCompany(c4, 5, 17);
+    b.addCompany(c5, 20, 20);
+
+
+    // Creation des Transformation
+    Transformation transfo_bois_table(planche1, bois1, *scierie1, 110.0f, 1);
 
     
 
