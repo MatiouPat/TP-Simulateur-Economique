@@ -4,13 +4,23 @@ Square::Square()
 {
 }
 
+
 Square::Square(int _x, int _y)
 {
     x = _x;
     y = _y;
 }
 
-Square::Square(int _x, int _y, int _cost, int _heuristic, SquareState _state)
+Square::Square(int _x, int _y, float _cost, int _heuristic)
+{
+    x = _x;
+    y = _y;
+    cost = _cost;
+    heuristic = _heuristic;
+    state = SquareState::UNKNOWN;
+}
+
+Square::Square(int _x, int _y, float _cost, int _heuristic, SquareState _state)
 {
     x = _x;
     y = _y;
@@ -18,7 +28,6 @@ Square::Square(int _x, int _y, int _cost, int _heuristic, SquareState _state)
     heuristic = _heuristic;
     state = _state;
 }
-
 
 Square::~Square()
 {
@@ -77,4 +86,9 @@ void Square::setCost(float _cost)
 SquareState Square::getState()
 {
     return state;
+}
+
+void Square::setState(SquareState _state)
+{
+    state = _state;
 }
