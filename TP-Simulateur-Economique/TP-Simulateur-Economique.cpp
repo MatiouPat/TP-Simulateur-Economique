@@ -218,10 +218,10 @@ float max(std::vector<std::vector<float>> vec)
 int main()
 {
     // 1 case = combien de pixel 
-    float scale = 20;
+    float scale = 3;
 
-    Board b(30, 30);
-    b.generateMap(0.1f);
+    Board b(100, 100);
+    b.generateMap(0.05f);
 
     std::vector<Company> companiesList;
 
@@ -233,7 +233,7 @@ int main()
     b.addCompany(c2, 10, 3);
     
     b.printBoard();
-    SFMLWindow().print(b, 30);
+    SFMLWindow().print(b, scale);
   
     return 0;
 
