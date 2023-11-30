@@ -5,12 +5,16 @@
 #include "PerlinNoise.hpp"
 
 
+/**
+* Initialisation d'un board de taille _sizeX ligne et _sizeY colonne
+**/
 Board::Board(int _sizeX, int _sizeY)
 {
     sizeX = _sizeX;
     sizeY = _sizeY;
-    //board = std::deque<std::deque<std::shared_ptr<Square>>>(_sizeY, std::deque<std::shared_ptr<Square>>(_sizeX));
+
     board = std::deque<std::deque<std::shared_ptr<Square>>>(_sizeX, std::deque<std::shared_ptr<Square>>(_sizeY));
+
     for (int i = 0; i < board.size(); i++)
     {
         for (int j = 0; j < board[i].size(); j++)
@@ -20,6 +24,10 @@ Board::Board(int _sizeX, int _sizeY)
     }
 }
 
+
+/**
+* Initialise un board a partir d'un autre board
+**/
 Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
 {
     sizeX = static_cast<int>(_board.size());
@@ -34,24 +42,39 @@ Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
     board = _board;
 }
 
+
 Board::~Board()
 {
 
 }
 
 
+/**
+* Retourne le nombre de ligne de la board
+**/
 int Board::getNbRow()
 {
     return board.size();
 }
-std::shared_ptr<Square> Board::getSquare(int i, int j)
-{
-    return board[i][j];
-}
+
+
+/**
+* Retourne le nombre de colonne de la board
+**/
 int Board::getNbCol()
 {
     return board.at(0).size();
 }
+
+
+/**
+* Retourne le square a la position (i, j) dans la board
+**/
+std::shared_ptr<Square> Board::getSquare(int i, int j)
+{
+    return board[i][j];
+}
+
 
 /**
 * 0-Left : 0001 / 1-Top : 0010 / 2-Right : 0100 / 3-Bottom : 1000
@@ -166,6 +189,7 @@ void Board::addChessboardCase(Orientation orientation)
     }
 }
 
+
 /**
 * Print board in the console
 */
@@ -196,48 +220,9 @@ void Board::printBoard()
     std::cout << '\n' << std::endl;
 }
 
-/**
-* Print board in the console
-*/
-void Board::printBoard(std::vector<Company>& entreprises)
-{
-    for (int x = 0; x < board.size(); x++)
-    {
-        for (int y = 0; y < board[x].size(); y++)
-        {
-            char character;
-
-            /*auto it = std::find_if(entreprises.begin(), entreprises.end(),
-                [x, y](Company& e) { return e.getPositionX() == x && e.getPositionY() == y; });*/
-
-            //if (it != entreprises.end()) {
-            if (false) {
-                character = 'E';
-            }
-            else
-            {
-                switch (board[x][y]->getState())
-                {
-                case UNKNOWN:
-                    character = '?';
-                    break;
-                case TRAVERSABLE:
-                    character = 'o';
-                    break;
-                case UNTRAVERSABLE:
-                    character = 'x';
-                    break;
-                }
-            }
-            std::cout << character << ' ';
-        }
-        std::cout << '\n';
-    }
-    std::cout << '\n' << std::endl;
-}
 
 /**
-*
+* 
 **/
 std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int startY, int endX, int endY)
 {
@@ -388,7 +373,11 @@ float Board::calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, 
 }
 
 /**
-*
+* Ajoute une company dans le square en position (x, y) dans le board
+* 
+* @param c La company que l'on veut ajouter
+* @param x La ligne a laquelle on veut ajouter la company
+* @param y La colonne a laquelle on veut ajouter la company
 **/
 void Board::addCompany(std::shared_ptr<Company> c, int x, int y)
 {
@@ -398,7 +387,8 @@ void Board::addCompany(std::shared_ptr<Company> c, int x, int y)
 
 
 /**
-* type :
+* Definit les state et les value de tous les square de la board
+* en utilisant le bruit de perlin
 **/
 void Board::generateMap(float frequency)
 {

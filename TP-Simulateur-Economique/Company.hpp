@@ -22,7 +22,7 @@ public:
 	Company(std::string _name, unsigned int _niveau, double _capital, std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock);
 	~Company();
 	std::string getName();
-
+	void addEmployee(Employee _employee);
 
 private:
 
@@ -31,4 +31,5 @@ private:
 	double capital;
 	std::vector<Employee> listEmployee;
 	std::map<int, Merchandise> stock;
+
 };
