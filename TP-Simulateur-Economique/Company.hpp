@@ -12,17 +12,20 @@ class Square;
 class Employee;
 class Merchandise;
 
-
+// Abstract class Company
 class Company
 {
 
 public:
 
+	virtual ~Company();  
+	virtual std::string getName() = 0;  
+	virtual void addEmployee(Employee _employee) = 0;  
+
+protected:
+
 	Company();
 	Company(std::string _name, unsigned int _niveau, double _capital, std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock);
-	~Company();
-	std::string getName();
-	void addEmployee(Employee _employee);
 
 private:
 

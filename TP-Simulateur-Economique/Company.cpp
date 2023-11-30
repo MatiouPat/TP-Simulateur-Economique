@@ -25,8 +25,5 @@ Company::~Company()
 {
 }
 
-std::string Company::getName()
-{
-    return name;
-}
+
 
