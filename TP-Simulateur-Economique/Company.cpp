@@ -8,7 +8,7 @@ Company::Company()
 {
 }
 
-Company::Company(std::string _name, unsigned int _niveau, double _capital, Square _position, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, std::vector<Merchandise> _sortant)
+Company::Company(std::string _name, unsigned int _niveau, double _capital, Square _position, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, Merchandise _sortant)
 {
     name = _name;
     niveau = _niveau;
