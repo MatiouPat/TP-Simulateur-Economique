@@ -146,6 +146,7 @@
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="PrimaryCompany.cpp" />
     <ClCompile Include="SecondaryCompany.cpp" />
+    <ClCompile Include="SFMLWindow.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="TP-Simulateur-Economique.cpp" />
     <ClCompile Include="Transformation.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="PerlinNoise.hpp" />
     <ClInclude Include="PrimaryCompany.hpp" />
     <ClInclude Include="SecondaryCompany.hpp" />
+    <ClInclude Include="SFMLWindow.hpp" />
     <ClInclude Include="Square.hpp" />
     <ClInclude Include="SquareState.hpp" />
     <ClInclude Include="Transformation.hpp" />
