@@ -241,14 +241,9 @@ void Board::printBoard(std::vector<Company>& entreprises)
 **/
 std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int startY, int endX, int endY)
 {
-    board[startX][startY] = std::shared_ptr<Square>(new Square{ startX, startY, 0.0f, 0, SquareState::TRAVERSABLE });
-    board[endX][endY] = std::shared_ptr<Square>(new Square{ endX, endY, float(sizeX + sizeY), sizeX + sizeY,  SquareState::TRAVERSABLE });
-    board[2][1] = std::shared_ptr<Square>(new Square{ 2, 1, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[2][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[1][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
     std::shared_ptr<Square> cursor = board[startX][startY];
-    std::vector<std::shared_ptr<Square>> squareCalculed;
-    std::vector<std::shared_ptr<Square>> squareVisited;
+    std::vector<std::shared_ptr<Square>> squareCalculed = {};
+    std::vector<std::shared_ptr<Square>> squareVisited = {};
 
     while (cursor->getX() != board[endX][endY]->getX() || cursor->getY() != board[endX][endY]->getY())
     {
@@ -290,6 +285,12 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
                     }
                 }
             }
+        }
+        
+        /*Si aucun accès possible à l'arrivé, arrêt de la recherche*/
+        if (squareCalculed.size() == 0 && squareVisited.size() == 0)
+        {
+            return {};
         }
 
         /*Recherche des noeuds visités avec le cout le plus faible*/
@@ -345,7 +346,6 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
                 }
             }
         }
-        std::cout << "\n" << std::endl;
         traveler = futureNode;
         path.push_back(futureNode);
     }
