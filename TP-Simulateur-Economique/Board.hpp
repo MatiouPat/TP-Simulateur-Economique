@@ -21,6 +21,11 @@ public:
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
     float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
     std::deque<std::shared_ptr<Square>> neighbours(int squareX, int squareY);
+    void addCompany(std::shared_ptr<Company> c, int x, int y);
+    void generateMap(float frequency);
+    int getNbCol();
+    int getNbRow();
+    std::shared_ptr<Square> getSquare(int i, int j);
 
 protected:
 

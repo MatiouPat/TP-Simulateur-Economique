@@ -2,6 +2,7 @@
 
 #include "SFMLWindow.hpp"
 #include <SFML/Graphics.hpp>
+#include "Board.hpp"
 
 
 SFMLWindow::SFMLWindow()
@@ -29,12 +30,12 @@ float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float 
 
 
 /**
-* Affiche dans une fenetre graphique une matrice de float 
+* Affiche dans une fenetre graphique un board
 **/
-void SFMLWindow::print(std::vector<std::vector<float>> carte, int echelle)
+void SFMLWindow::print(Board b, int echelle)
 {
-    int n = carte.size();
-    int m = carte.at(0).size();
+    int n = b.getNbRow();
+    int m = b.getNbCol();
     int windowSize = n * echelle;
     int windowSize2 = m * echelle;
     float cellSize = (float)windowSize / n;
@@ -62,42 +63,37 @@ void SFMLWindow::print(std::vector<std::vector<float>> carte, int echelle)
         {
             for (int j = 0; j < m; ++j)
             {
-                //Point p = m.getPointByIndexes(i, j);
 
-                float newValue = scaleValue(carte[i][j],  -3.8, 3.8, 0, 255);
 
+                /* ancien truc
                 cell.setSize(sf::Vector2f(cellSize, cellSize));
                 cell.setPosition(j * cellSize, i * cellSize);
-                //cell.setFillColor(sf::Color::White);
-                //cell.setFillColor(0);
-                //cell.setFillColor(0);
-                window.draw(cell);
+                window.draw(cell);*/
 
-                //std::cout << carte[i][j] << std::endl;
-                sf::Color color;
-                /* white -> blue -> black
-                if (newValue < 255)
+                float newValue = scaleValue(b.getSquare(i, j)->getValue(), -3.8, 3.8, 0, 255);
+
+                cell.setFillColor(sf::Color(80, newValue, 10));
+
+                if (newValue<80)
                 {
-                    color = sf::Color(0, 0, newValue);
+                    cell.setFillColor(sf::Color(60, 160, 210));
+
                 }
-                else if (newValue < 510)
+
+                if (b.getSquare(i, j)->isCompany())
                 {
-                    color = sf::Color(0, newValue-255, 255);
+                    cell.setFillColor(sf::Color::Red);
+
                 }
-                else
-                {
-                    color = sf::Color(newValue-510, 255, 255);
-                }*/
-               
-                color = sf::Color(80, newValue, 255);
-
-                cell.setFillColor(color);
 
 
-
-
+                /*ancien truc
                 cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
                 cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
+                window.draw(cell);*/
+
+                cell.setSize(sf::Vector2f(cellSize, cellSize));
+                cell.setPosition((j * cellSize), (i * cellSize));
                 window.draw(cell);
 
             }

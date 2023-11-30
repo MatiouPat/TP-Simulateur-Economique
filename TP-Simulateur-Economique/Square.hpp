@@ -1,7 +1,12 @@
 // Square.hpp
 #pragma once
 
+#include <iostream>
 #include "SquareState.hpp"
+#include "Company.hpp"
+
+
+
 
 /**
 * Represente une case de la board 
@@ -26,6 +31,10 @@ public:
     void setCost(float _cost);
     SquareState getState();
     void setState(SquareState _state);
+    void setCompany(std::shared_ptr<Company> c);
+    bool isCompany();
+    float getValue();
+    void setValue(float);
 
 private:
 
@@ -34,5 +43,6 @@ private:
     float cost;
     int heuristic;
     SquareState state;
-
+    float value;
+    std::shared_ptr<Company> company;
 };

@@ -6,14 +6,15 @@
 #include <cmath>
 #include <algorithm>
 
+#include "Employee.hpp"
+#include "Company.hpp"
 #include "PrimaryCompany.hpp"
 #include "SecondaryCompany.hpp"
 #include "Square.hpp"
 #include "Board.hpp"
-#include "Company.hpp"
 #include "PerlinNoise.hpp"
-
 #include "SFMLWindow.hpp"
+
 
 /*
 * Générer une carte avec du bruit de Perlin
@@ -28,7 +29,7 @@ std::deque<std::deque<std::shared_ptr<Square>>> generateMap(int largeur, int hau
         for (int y = 0; y < hauteur; ++y)
         {
             float bitState = perlinN.perlinNoise2D(x * frequence, y * frequence);
-            std::shared_ptr<Square> square(new Square(x, y, x + y, x + y));
+            std::shared_ptr<Square> square(new Square(x, y, static_cast<float>(x + y), x + y));
 
             if (bitState < -0.8)
             {
@@ -69,10 +70,12 @@ void afficherCarte(const std::vector<std::vector<float>>& carte,  std::vector<Co
         for (int x = 0; x < carte.size(); ++x) {
             char character = ' ';
 
+            /*
             auto it = std::find_if(entreprises.begin(), entreprises.end(),
                 [x, y](Company& e) { return e.getPositionX() == x && e.getPositionY() == y; });
+            */
 
-            if (it != entreprises.end()) {
+            /*if (it != entreprises.end()) {
                 if (it->getName() == "scierie") {
                     character = 'S';
                 }
@@ -89,7 +92,8 @@ void afficherCarte(const std::vector<std::vector<float>>& carte,  std::vector<Co
                     character = 'B';
                 }
             }
-            else {
+            else {*/
+            if (true) {
                 float valeur = carte[x][y];
 
                 if (valeur < -0.8) {
@@ -213,88 +217,19 @@ float max(std::vector<std::vector<float>> vec)
 
 int main()
 {
+    // 1 case = combien de pixel 
+    float scale = 20;
 
-    /*const int largeur = 20;
-    const int hauteur = 20;
-    const float frequence = 0.1f;
-    std::deque<std::deque<std::shared_ptr<Square>>> carte = generateMap(largeur, hauteur, frequence);
-    std::vector<Company> entreprises;
-    Company entreprise = Company("scririe", 0, 0, Square(4, 8, 0, 0), {}, {});
-    entreprises.push_back(entreprise);
-    Board board(carte);
-    board.printBoard(entreprises);
-    std::deque<std::shared_ptr<Square>> cheminTest = board.searchShortestPath(19, 2, 4, 8);
-    std::cout << "Chemin recommande pour aller de  (" << 19 << "," << 2 << ") a (" << 4 << "," << 8 << ") : \n";
-    for (auto i : cheminTest)
-    {
-        std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
-    }*/
-    //afficherCarte(carte, entreprises);
-    
-    /*
-
-    std::cout << "Choisissez une option : " << std::endl;
-    std::cout << "1. Generer une nouvelle carte" << std::endl;
-    std::cout << "2. Importer une carte depuis un fichier" << std::endl;
-
-    int choix;
-    std::cin >> choix;
-
-    std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
-    //board->addChessboardCase(SOUTH_EAST);
-    board->printChessboard();
-    int startX = 1;
-    int startY = 1;
-    int endX = 4;
-    int endY = 4;
-    std::deque<std::shared_ptr<Square>> cheminTest = board->searchShortestPath(startX, startY, endX, endY);
-    std::cout << "Chemin recommande pour aller de  (" << startX << "," << startY << ") a (" << endX << "," << endY << ") : \n";
-    for (auto i : cheminTest)
-    {
-        std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
-    }
-
-    std::cout << " \n" << std::endl;
-    */
-
-
-    /*if (choix == 1) {
-        // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
-        std::vector<std::vector<float>> carte = genererCarte(largeur, hauteur, frequence);
-
-        // Afficher la carte generÃ©e
-        std::cout << "Carte gÃ©nÃ©rÃ©e :" << std::endl;
-        //afficherCarte(carte);
-
-        // Exporter la carte vers un fichier
-        exporterCarte(carte, "carte.txt");
-    }
-    else if (choix == 2) {
-        // Importer une carte depuis un fichier
-        std::vector<std::vector<float>> carteImportee = importerCarte("carte.txt");
-
-        // Afficher la carte importÃ©e
-        std::cout << "Carte importÃ©e :" << std::endl;
-        //afficherCarte(carteImportee);
-    }
-    else {
-        std::cerr << "Option non valide." << std::endl;
-        return 1;
-    }*/
-
-
-    // Tests affichage graphique
-
-    /*std::vector<std::vector<float>> carte;
-    carte = generateMap(200, 200, 0.02f);
-    std::vector<Company> test;
-    Company comp("name", 1, 1000, Square(2, 2), std::vector<Employee>(), std::map<int, Merchandise>());
-    test.push_back(comp);
-    //afficherCarte(carte, test);
-    std::cout << min(carte) << std::endl;
-    std::cout << max(carte) << std::endl;
-    SFMLWindow().print(carte, 4);*/
-
+    Board b(30, 30);
+    std::shared_ptr<Company> c = std::make_shared<Company>(Company("name", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    b.generateMap(0.1f);
+    b.addCompany(c, 1, 2);
+    b.printBoard();
+    std::shared_ptr<Square> test = b.getSquare(1, 2);
+    test = b.getSquare(2, 1);
+    test = b.getSquare(1, 2);
+    SFMLWindow().print(b, 30);
+  
     return 0;
 
 }
