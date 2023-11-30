@@ -12,6 +12,7 @@ class Square
 public:
 
     Square();
+    Square(int _x, int _y);
     Square(int _x, int _y, float _cost, int _heuristic);
     Square(int _x, int _y, float _cost, int _heuristic, SquareState _state);
     ~Square();

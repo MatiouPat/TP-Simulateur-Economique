@@ -13,6 +13,8 @@
 #include "Company.hpp"
 #include "PerlinNoise.hpp"
 
+#include "SFMLWindow.hpp"
+
 /*
 * Générer une carte avec du bruit de Perlin
 */
@@ -178,9 +180,40 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& nameFil
 }
 
 
+float min(std::vector<std::vector<float>> vec)
+{
+    float min = 10000;
+    for (int i = 0; i < vec.size(); ++i)
+    {
+        for (int j = 0; j < vec.at(0).size(); ++j)
+        {
+            if (vec[i][j] < min)
+            {
+                min = vec[i][j];
+            }
+        }
+    }
+    return min;
+}
+float max(std::vector<std::vector<float>> vec)
+{
+    float max = 0;
+    for (int i = 0; i < vec.size(); ++i)
+    {
+        for (int j = 0; j < vec.at(0).size(); ++j)
+        {
+            if (vec[i][j] > max)
+            {
+                max = vec[i][j];
+            }
+        }
+    }
+    return max;
+}
 
 int main()
 {
+
     const int largeur = 20;
     const int hauteur = 20;
     const float frequence = 0.1f;
@@ -205,9 +238,9 @@ int main()
     std::cout << "2. Importer une carte depuis un fichier" << std::endl;
 
     int choix;
-    std::cin >> choix;*/
+    std::cin >> choix;
 
-    /*std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
+    std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
     //board->addChessboardCase(SOUTH_EAST);
     board->printChessboard();
     int startX = 1;
@@ -220,7 +253,10 @@ int main()
     {
         std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
     }
-    std::cout << " \n" << std::endl;*/
+
+    std::cout << " \n" << std::endl;
+    */
+
 
     /*if (choix == 1) {
         // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
@@ -228,7 +264,7 @@ int main()
 
         // Afficher la carte generÃ©e
         std::cout << "Carte gÃ©nÃ©rÃ©e :" << std::endl;
-        afficherCarte(carte);
+        //afficherCarte(carte);
 
         // Exporter la carte vers un fichier
         exporterCarte(carte, "carte.txt");
@@ -239,12 +275,25 @@ int main()
 
         // Afficher la carte importÃ©e
         std::cout << "Carte importÃ©e :" << std::endl;
-        afficherCarte(carteImportee);
+        //afficherCarte(carteImportee);
     }
     else {
         std::cerr << "Option non valide." << std::endl;
         return 1;
     }*/
+
+
+    // Tests affichage graphique
+
+    std::vector<std::vector<float>> carte;
+    carte = genererCarte(200, 200, 0.02f);
+    std::vector<Company> test;
+    Company comp("name", 1, 1000, Square(2, 2), std::vector<Employee>(), std::map<int, Merchandise>());
+    test.push_back(comp);
+    //afficherCarte(carte, test);
+    std::cout << min(carte) << std::endl;
+    std::cout << max(carte) << std::endl;
+    SFMLWindow().print(carte, 4);
 
     return 0;
 

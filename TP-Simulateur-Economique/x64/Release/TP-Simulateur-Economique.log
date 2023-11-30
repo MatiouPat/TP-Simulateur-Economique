@@ -1,0 +1,11 @@
+﻿  TP-Simulateur-Economique.cpp
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(22,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(23,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(150,33): warning C4305: '=' : troncation de 'int' à 'char'
+E:\POEI\CPP\git\TP-Simulateur-Economique\TP-Simulateur-Economique\TP-Simulateur-Economique.cpp(150,33): warning C4309: '=' : troncation de valeur de constante
+  Génération de code en cours
+  1 of 367 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Fin de la génération du code
+  TP-Simulateur-Economique.vcxproj -> E:\POEI\CPP\git\TP-Simulateur-Economique\x64\Release\TP-Simulateur-Economique.exe

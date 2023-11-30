@@ -4,6 +4,13 @@ Square::Square()
 {
 }
 
+
+Square::Square(int _x, int _y)
+{
+    x = _x;
+    y = _y;
+}
+
 Square::Square(int _x, int _y, float _cost, int _heuristic)
 {
     x = _x;
