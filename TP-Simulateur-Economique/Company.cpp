@@ -8,7 +8,7 @@ Company::Company()
 {
 }
 
-Company::Company(std::string _name, unsigned int _niveau, double _capital, Square _position, std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock)
+Company::Company(std::string _name, unsigned int _niveau, double _capital, Square _position, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, std::vector<Merchandise> _entrant, std::vector<Merchandise> _sortant, unsigned int coutProd)
 {
     name = _name;
     niveau = _niveau;
@@ -16,6 +16,8 @@ Company::Company(std::string _name, unsigned int _niveau, double _capital, Squar
     position = _position;
     listEmployee = _listEmployee;
     stock = _stock;
+    stockMax = _stockMax;
+    sortant = _sortant;
 }
 
 Company::~Company()
