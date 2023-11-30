@@ -5,6 +5,7 @@
 #include <deque>
 #include "Square.hpp"
 #include "Orientation.hpp"
+#include "Company.hpp"
 
 class Board
 {
@@ -12,9 +13,11 @@ class Board
 public:
 
     Board(int _sizeX, int _sizeY);
+    Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board);
     ~Board();
     void addChessboardCase(Orientation orientation);
-    void printChessboard();
+    void printBoard();
+    void printBoard(std::vector<Company>& entreprises);
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
     float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
     std::deque<std::shared_ptr<Square>> neighbours(int squareX, int squareY);
