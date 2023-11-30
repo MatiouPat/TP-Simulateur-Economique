@@ -3,6 +3,17 @@
 #include "PerlinNoise.hpp"
 #include <cmath>
 #include <iostream>
+#include <random>
+
+PerlinNoise::PerlinNoise()
+{
+    // Utilisez une graine aléatoire pour initialiser la séquence de permutation
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(1, 500);
+
+    hash = dis(gen);
+}
 
 // Fonction pour interpoler linéairement entre deux valeurs
 float PerlinNoise::lerp(float a, float b, float t) {
@@ -18,11 +29,16 @@ float PerlinNoise::perlinNoise1D(int x) {
 
 // Fonction pour interpoler le bruit de Perlin
 float PerlinNoise::fade(float t) {
-    return t * t * t * (t * (t * 6 - 15) + 10);
+    //return t * t * t * (t * (t * 6 - 15) + 10);
+    return 0.5f * (1.0f - std::cos(t * 3.14159265359f));
 }
 
 // Fonction pour générer le bruit de Perlin 2D
 float PerlinNoise::perlinNoise2D(float x, float y) {
+
+    x = x + hash;
+    y = y + hash;
+
     int X = static_cast<int>(std::floor(x)) & 255;
     int Y = static_cast<int>(std::floor(y)) & 255;
 
@@ -31,6 +47,8 @@ float PerlinNoise::perlinNoise2D(float x, float y) {
 
     float u = fade(x);
     float v = fade(y);
+
+
 
     int p[512]; // Tableau de permutation
     for (int i = 0; i < 512; ++i) {
