@@ -13,19 +13,34 @@
 #include "Company.hpp"
 #include "PerlinNoise.hpp"
 
-// Fonction pour gÃ©nÃ©rer une carte avec du bruit de Perlin
-std::vector<std::vector<float>> genererCarte(int largeur, int hauteur, float frequence) {
-    std::vector<std::vector<float>> carte(largeur, std::vector<float>(hauteur));
-
+/*
+* Générer une carte avec du bruit de Perlin
+*/
+std::deque<std::deque<std::shared_ptr<Square>>> generateMap(int largeur, int hauteur, float frequence)
+{
+    std::deque<std::deque<std::shared_ptr<Square>>> map(largeur, std::deque<std::shared_ptr<Square>>(hauteur));
     PerlinNoise perlinN;
 
-    for (int x = 0; x < largeur; ++x) {
-        for (int y = 0; y < hauteur; ++y) {
-            carte[x][y] = perlinN.perlinNoise2D(x * frequence, y * frequence);
+    for (int x = 0; x < largeur; ++x)
+    {
+        for (int y = 0; y < hauteur; ++y)
+        {
+            float bitState = perlinN.perlinNoise2D(x * frequence, y * frequence);
+            std::shared_ptr<Square> square(new Square(x, y, x + y, x + y));
+
+            if (bitState < -0.8)
+            {
+                square->setState(SquareState::UNTRAVERSABLE);
+            }
+            else
+            {
+                square->setState(SquareState::TRAVERSABLE);
+            }
+            map[x][y] = square;
         }
     }
 
-    return carte;
+    return map;
 }
 
 // Fonction pour exporter la carte vers un fichier
@@ -40,13 +55,12 @@ void exporterCarte(const std::vector<std::vector<float>>& carte, const std::stri
             fichier << std::endl;
         }
 
-        std::cout << "Carte exportÃ©e avec succÃ¨s vers : " << nomFichier << std::endl;
+        std::cout << "Carte exportee avec succes vers : " << nomFichier << std::endl;
     }
     else {
         std::cerr << "Erreur lors de l'exportation du fichier." << std::endl;
     }
 }
-
 
 void afficherCarte(const std::vector<std::vector<float>>& carte,  std::vector<Company>& entreprises) {
     for (int y = 0; y < carte[0].size(); ++y) {
@@ -118,10 +132,10 @@ std::vector<std::vector<float>> importerCarte(const std::string& nomFichier) {
             ligne.push_back(valeur);
         }
 
-        // Ajouter la ligne Ã  la carte
+        // Ajouter la ligne à la carte
         carte.push_back(ligne);
 
-        std::cout << "Carte importÃ©e avec succÃ¨s depuis : " << nomFichier << std::endl;
+        std::cout << "Carte importee avec succes depuis : " << nomFichier << std::endl;
     }
     else {
         std::cerr << "Erreur lors de l'importation du fichier." << std::endl;
@@ -167,9 +181,24 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& nameFil
 
 int main()
 {
-    /*const int largeur = 40;
+    const int largeur = 20;
     const int hauteur = 20;
     const float frequence = 0.1f;
+    std::deque<std::deque<std::shared_ptr<Square>>> carte = generateMap(largeur, hauteur, frequence);
+    std::vector<Company> entreprises;
+    Company entreprise = Company("scririe", 0, 0, Square(4, 8, 0, 0), {}, {});
+    entreprises.push_back(entreprise);
+    Board board(carte);
+    board.printBoard(entreprises);
+    std::deque<std::shared_ptr<Square>> cheminTest = board.searchShortestPath(19, 2, 4, 8);
+    std::cout << "Chemin recommande pour aller de  (" << 19 << "," << 2 << ") a (" << 4 << "," << 8 << ") : \n";
+    for (auto i : cheminTest)
+    {
+        std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
+    }
+    //afficherCarte(carte, entreprises);
+    
+    /*
 
     std::cout << "Choisissez une option : " << std::endl;
     std::cout << "1. Generer une nouvelle carte" << std::endl;
@@ -178,7 +207,7 @@ int main()
     int choix;
     std::cin >> choix;*/
 
-    std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
+    /*std::shared_ptr<Board> board = std::shared_ptr<Board>(new Board(5, 5));
     //board->addChessboardCase(SOUTH_EAST);
     board->printChessboard();
     int startX = 1;
@@ -191,7 +220,7 @@ int main()
     {
         std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
     }
-    std::cout << " \n" << std::endl;
+    std::cout << " \n" << std::endl;*/
 
     /*if (choix == 1) {
         // GÃ©nÃ©rer une nouvelle carte avec du bruit de Perlin
