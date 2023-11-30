@@ -221,13 +221,18 @@ int main()
     float scale = 20;
 
     Board b(30, 30);
-    std::shared_ptr<Company> c = std::make_shared<Company>(Company("name", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
     b.generateMap(0.1f);
+
+    std::vector<Company> companiesList;
+
+
+    std::shared_ptr<Company> c = std::make_shared<Company>(Company("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
     b.addCompany(c, 1, 2);
+
+    std::shared_ptr<Company> c2 = std::make_shared<Company>(Company("Scierie 2", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    b.addCompany(c2, 10, 3);
+    
     b.printBoard();
-    std::shared_ptr<Square> test = b.getSquare(1, 2);
-    test = b.getSquare(2, 1);
-    test = b.getSquare(1, 2);
     SFMLWindow().print(b, 30);
   
     return 0;

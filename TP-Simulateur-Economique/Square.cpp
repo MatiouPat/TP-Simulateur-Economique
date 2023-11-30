@@ -105,13 +105,14 @@ void Square::setState(SquareState _state)
     state = _state;
 }
 
+std::shared_ptr<Company> Square::getCompany()
+{
+    return company;
+}
+
 void Square::setCompany(std::shared_ptr<Company> c)
 {
-    std::cout << "company" << std::endl;
-    std::cout << (company == nullptr) << std::endl;
     company = c;
-    std::cout << (company == nullptr) << std::endl;
-
 }
 bool Square::isCompany()
 {

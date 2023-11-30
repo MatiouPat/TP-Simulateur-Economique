@@ -44,6 +44,9 @@ void SFMLWindow::print(Board b, int echelle)
     sf::RectangleShape cell;
     cell.setSize(sf::Vector2f(cellSize, cellSize));
 
+    // vector de square (contient les square associé a chaque company de la board)
+    std::vector<Square> vecCompanies;
+
     while (window.isOpen())
     {
 
@@ -74,6 +77,8 @@ void SFMLWindow::print(Board b, int echelle)
 
                 cell.setFillColor(sf::Color(80, newValue, 10));
 
+                // affichage de la couleur
+
                 if (newValue<80)
                 {
                     cell.setFillColor(sf::Color(60, 160, 210));
@@ -82,11 +87,9 @@ void SFMLWindow::print(Board b, int echelle)
 
                 if (b.getSquare(i, j)->isCompany())
                 {
+                    vecCompanies.push_back(*(b.getSquare(i,j)));
                     cell.setFillColor(sf::Color::Red);
-
                 }
-
-
                 /*ancien truc
                 cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
                 cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
@@ -96,8 +99,33 @@ void SFMLWindow::print(Board b, int echelle)
                 cell.setPosition((j * cellSize), (i * cellSize));
                 window.draw(cell);
 
+                
             }
         }
+
+        // afficher les noms des entreprises
+             // affichage des noms des entreprises
+        sf::Font font;
+        if (!font.loadFromFile("Arial.ttf")) {
+            // pb de lecture de la police
+        }
+        for (auto& val : vecCompanies) {
+            int x = val.getX();
+            int y = val.getY();
+            sf::Text text;
+            text.setFont(font);
+            text.setString(val.getCompany()->getName());
+            text.setCharacterSize(24);
+            text.setFillColor(sf::Color::Black);
+            //text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+            text.setPosition(y * cellSize, (x - 1) * cellSize);
+            //text.setPosition(20, 20);
+            window.draw(text);
+        }
+       
+        
+
+
 
         window.display();
     }

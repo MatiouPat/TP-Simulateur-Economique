@@ -31,6 +31,7 @@ public:
     void setCost(float _cost);
     SquareState getState();
     void setState(SquareState _state);
+    std::shared_ptr<Company> getCompany();
     void setCompany(std::shared_ptr<Company> c);
     bool isCompany();
     float getValue();
