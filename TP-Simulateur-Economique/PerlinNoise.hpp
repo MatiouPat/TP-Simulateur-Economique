@@ -3,8 +3,8 @@
 
 class PerlinNoise
 {
-
-    float hash;
+    // graine permettant de generer une carte aleatoire
+    float seed;
 
 public :
 
