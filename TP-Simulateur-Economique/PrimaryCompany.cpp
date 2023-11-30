@@ -1,5 +1,5 @@
 #include "PrimaryCompany.hpp"
 
-void PrimaryCompany::create()
+std::vector<Merchandise> PrimaryCompany::create()
 {
 }
