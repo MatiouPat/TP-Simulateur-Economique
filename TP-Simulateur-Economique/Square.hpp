@@ -13,6 +13,7 @@ public:
 
     Square();
     Square(int _x, int _y, int _cost, int _heuristic, SquareState _state);
+    Square(int _x, int _y);
     ~Square();
     int getX();
     void setX(int _x);

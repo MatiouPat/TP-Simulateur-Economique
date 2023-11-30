@@ -13,84 +13,9 @@
 #include "Company.hpp"
 #include "PerlinNoise.hpp"
 
-#include "SFML/Graphics.hpp"
+#include "SFMLWindow.hpp"
 
-
-
-void printSFML(std::vector<std::vector<float>> carte, std::vector<Company> vec, int echelle)
-{
-    int n = carte.size();
-    int m = carte.at(0).size();
-    int windowSize = n*echelle;
-    int windowSize2 = m* echelle;
-    float cellSize = (float)windowSize / n;
-    sf::RenderWindow window(sf::VideoMode(windowSize, windowSize2), "Carte");
-
-    sf::RectangleShape cell;
-    cell.setSize(sf::Vector2f(cellSize, cellSize));
-
-    while (window.isOpen())
-    {
-
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        // il faut effacer avant de reafficher
-        window.clear();
-
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < m; ++j)
-            {
-                //Point p = m.getPointByIndexes(i, j);
-
-                float newValue = ((carte[i][j] - (-3.8)) / (3.8 - (-3.8))) * 765;
-
-                cell.setSize(sf::Vector2f(cellSize, cellSize));
-                cell.setPosition(j * cellSize, i * cellSize);
-                //cell.setFillColor(sf::Color::White);
-                //cell.setFillColor(0);
-                //cell.setFillColor(0);
-                window.draw(cell);
-
-                //std::cout << carte[i][j] << std::endl;
-                sf::Color color;
-                if (newValue < 255)
-                {
-                    color = sf::Color(0, 0, newValue);
-                }
-                else if (newValue < 510)
-                {
-                    color = sf::Color(0, newValue-255, 255);
-                }
-                else 
-                {
-                    color = sf::Color(newValue-510, 255, 255);
-                }
-
-                cell.setFillColor(color);
-                
-             
-             
-
-                cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
-                cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
-                window.draw(cell);
-
-            }
-        }
-
-        window.display();
-    }
-}
-
-// Fonction pour generer une carte avec du bruit de Perlin
+//Fonction pour generer une carte avec du bruit de Perlin
 std::vector<std::vector<float>> genererCarte(int largeur, int hauteur, float frequence) {
     std::vector<std::vector<float>> carte(largeur, std::vector<float>(hauteur));
 
@@ -243,7 +168,7 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& nameFil
 
 float min(std::vector<std::vector<float>> vec)
 {
-    float min = 100;
+    float min = 10000;
     for (int i = 0; i < vec.size(); ++i)
     {
         for (int j = 0; j < vec.at(0).size(); ++j)
@@ -329,12 +254,14 @@ int main()
     // Tests affichage graphique
 
     std::vector<std::vector<float>> carte;
-    carte = genererCarte(100, 100, 0.1f);
+    carte = genererCarte(200, 200, 0.02f);
     std::vector<Company> test;
+    Company comp("name", 1, 1000, Square(2, 2), std::vector<Employee>(), std::map<int, Merchandise>());
+    test.push_back(comp);
     //afficherCarte(carte, test);
     std::cout << min(carte) << std::endl;
     std::cout << max(carte) << std::endl;
-    printSFML(carte, test, 5);
+    SFMLWindow().print(carte, 4);
 
     return 0;
 
