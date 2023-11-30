@@ -3,7 +3,7 @@
 /**
 *
 **/
-void SecondaryCompany::transform()
+std::vector<Transformation> SecondaryCompany::transform()
 {
 }
 
