@@ -18,6 +18,20 @@ Board::Board(int _sizeX, int _sizeY)
     }
 }
 
+Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
+{
+    sizeX = _board.size();
+    if (sizeX != 0)
+    {
+        sizeY = _board[0].size();
+    }
+    else
+    {
+        sizeY = 0;
+    }
+    board = _board;
+}
+
 Board::~Board()
 {
 
@@ -137,47 +151,85 @@ void Board::addChessboardCase(Orientation orientation)
     }
 }
 
-
 /**
 * Print board in the console
 */
-void Board::printChessboard()
+void Board::printBoard()
 {
-    for (std::deque<std::shared_ptr<Square>> row : board)
+    for (int x = 0; x < board.size(); x++)
     {
-        for (std::shared_ptr<Square> square : row)
+        for (int y = 0; y < board[x].size(); y++)
         {
-            char symbol;
-            switch (square->getState())
+            char character;
+
+            switch (board[x][y]->getState())
             {
             case UNKNOWN:
-                symbol = '?';
+                character = '?';
                 break;
             case TRAVERSABLE:
-                symbol = 'o';
+                character = 'o';
                 break;
             case UNTRAVERSABLE:
-                symbol = 'x';
+                character = 'x';
                 break;
             }
-            std::cout << symbol << ' ' << square->getCost() << ' ' << square->getHeuristic() << ' ';
+            std::cout << character << ' ';
         }
         std::cout << '\n';
     }
     std::cout << '\n' << std::endl;
 }
 
+/**
+* Print board in the console
+*/
+void Board::printBoard(std::vector<Company>& entreprises)
+{
+    for (int x = 0; x < board.size(); x++)
+    {
+        for (int y = 0; y < board[x].size(); y++)
+        {
+            char character;
+
+            auto it = std::find_if(entreprises.begin(), entreprises.end(),
+                [x, y](Company& e) { return e.getPositionX() == x && e.getPositionY() == y; });
+
+            if (it != entreprises.end()) {
+                character = 'E';
+            }
+            else
+            {
+                switch (board[x][y]->getState())
+                {
+                case UNKNOWN:
+                    character = '?';
+                    break;
+                case TRAVERSABLE:
+                    character = 'o';
+                    break;
+                case UNTRAVERSABLE:
+                    character = 'x';
+                    break;
+                }
+            }
+            std::cout << character << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n' << std::endl;
+}
 
 /**
 *
 **/
 std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int startY, int endX, int endY)
 {
-    board[startX][startY] = std::shared_ptr<Square>(new Square{ startX, startY, 0, 0, SquareState::TRAVERSABLE });
-    board[endX][endY] = std::shared_ptr<Square>(new Square{ endX, endY, sizeX + sizeY, sizeX + sizeY,  SquareState::TRAVERSABLE });
-    board[2][1] = std::shared_ptr<Square>(new Square{ 2, 1, sizeX + sizeY, sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[2][2] = std::shared_ptr<Square>(new Square{ 2, 2, sizeX + sizeY, sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[1][2] = std::shared_ptr<Square>(new Square{ 2, 2, sizeX + sizeY, sizeX + sizeY,  SquareState::UNTRAVERSABLE });
+    board[startX][startY] = std::shared_ptr<Square>(new Square{ startX, startY, 0.0f, 0, SquareState::TRAVERSABLE });
+    board[endX][endY] = std::shared_ptr<Square>(new Square{ endX, endY, float(sizeX + sizeY), sizeX + sizeY,  SquareState::TRAVERSABLE });
+    board[2][1] = std::shared_ptr<Square>(new Square{ 2, 1, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
+    board[2][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
+    board[1][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
     std::shared_ptr<Square> cursor = board[startX][startY];
     std::vector<std::shared_ptr<Square>> squareCalculed;
     std::vector<std::shared_ptr<Square>> squareVisited;
@@ -252,7 +304,7 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
     std::deque<std::shared_ptr<Square>> path;
     std::shared_ptr<Square> traveler = board[startX][startY];
     path.push_back(traveler);
-    printChessboard();
+    printBoard();
     while (traveler->getX() != board[endX][endY]->getX() || traveler->getY() != board[endX][endY]->getY())
     {
         float localCost = sizeX * sizeY;
