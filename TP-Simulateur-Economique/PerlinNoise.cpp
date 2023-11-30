@@ -7,37 +7,47 @@
 
 PerlinNoise::PerlinNoise()
 {
-    // Utilisez une graine aléatoire pour initialiser la séquence de permutation
+    // Chaque fois qu'on instancie un objet on genere une graine aleatoire entre 0 et 500
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, 500);
 
-    hash = dis(gen);
+    seed = dis(gen);
 }
 
-// Fonction pour interpoler linéairement entre deux valeurs
+/**
+* Fonction pour interpoler linéairement entre deux valeurs
+**/
 float PerlinNoise::lerp(float a, float b, float t) {
     return a + t * (b - a);
 }
 
-// Fonction pour générer un bruit de Perlin 1D
+
+/**
+* Fonction pour générer un bruit de Perlin 1D
+*/ 
 float PerlinNoise::perlinNoise1D(int x) {
     int n = x * 57;
     n = (n << 13) ^ n;
     return static_cast<float>((1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0));
 }
 
-// Fonction pour interpoler le bruit de Perlin
+
+/**
+* Fonction pour interpoler le bruit de Perlin
+**/
 float PerlinNoise::fade(float t) {
-    //return t * t * t * (t * (t * 6 - 15) + 10);
     return 0.5f * (1.0f - std::cos(t * 3.14159265359f));
 }
 
-// Fonction pour générer le bruit de Perlin 2D
+
+/**
+* Fonction pour générer le bruit de Perlin 2D
+**/ 
 float PerlinNoise::perlinNoise2D(float x, float y) {
 
-    x = x + hash;
-    y = y + hash;
+    x = x + seed;
+    y = y + seed;
 
     int X = static_cast<int>(std::floor(x)) & 255;
     int Y = static_cast<int>(std::floor(y)) & 255;
@@ -69,7 +79,9 @@ float PerlinNoise::perlinNoise2D(float x, float y) {
         lerp(grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1), u), v);
 }
 
-// Fonction pour calculer le gradient
+/**
+* Fonction pour calculer le gradient
+**/ 
 float PerlinNoise::grad(int hash, float x, float y) {
     int h = hash & 15;
     float grad = 1 + (h & 7); // Gradient value 1-8
