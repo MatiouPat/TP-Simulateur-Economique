@@ -387,57 +387,6 @@ float Board::calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, 
     }
 }
 
-
-/**
-*
-**/
-std::deque<std::shared_ptr<Square>> Board::neighbours(int squareX, int squareY)
-{
-    std::deque<std::shared_ptr<Square>> ptrNeighboursList;
-
-    /*switch (squareX)
-    {
-    case 0:
-        addChessboardCase(NORTH);
-        break;
-    case sizeX:
-        addChessboardCase(SOUTH);
-        break;
-    }
-
-    switch (squareY)
-    {
-    case 0:
-        addChessboardCase(WEST);
-        break;
-    case sizeY:
-        addChessboardCase(EAST);
-        break;
-    }*/
-    std::cout << squareX << ' ' << squareY << std::endl;
-
-    for (int i = -1; i < 2; i = i++)
-    {
-        for (int j = -1; j < 2; j = j++)
-        {
-            if (squareX + i >= 0 && squareX + i < sizeX && squareY + j >= 0 && squareY + j < sizeY)
-            {
-                if (board[squareX + i][squareY + j]->getState() != SquareState::UNTRAVERSABLE && squareX + i != squareX && squareY + 1 != squareY)
-                {
-                    ptrNeighboursList.push_back(board[squareX + i][squareY + j]);
-                }
-            }
-        }
-    }
-
-    for (auto& node : ptrNeighboursList)
-    {
-        std::cout << node->getX() << ',' << node->getY() << std::endl;
-    }
-
-    return ptrNeighboursList;
-}
-
 /**
 *
 **/
