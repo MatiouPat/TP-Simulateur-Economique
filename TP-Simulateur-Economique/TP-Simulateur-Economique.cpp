@@ -214,7 +214,7 @@ float max(std::vector<std::vector<float>> vec)
 int main()
 {
 
-    const int largeur = 20;
+    /*const int largeur = 20;
     const int hauteur = 20;
     const float frequence = 0.1f;
     std::deque<std::deque<std::shared_ptr<Square>>> carte = generateMap(largeur, hauteur, frequence);
@@ -228,7 +228,7 @@ int main()
     for (auto i : cheminTest)
     {
         std::cout << "  ( " << i->getX() << " , " << i->getY() << " ) \n";
-    }
+    }*/
     //afficherCarte(carte, entreprises);
     
     /*
@@ -285,15 +285,15 @@ int main()
 
     // Tests affichage graphique
 
-    std::vector<std::vector<float>> carte;
-    carte = genererCarte(200, 200, 0.02f);
+    /*std::vector<std::vector<float>> carte;
+    carte = generateMap(200, 200, 0.02f);
     std::vector<Company> test;
     Company comp("name", 1, 1000, Square(2, 2), std::vector<Employee>(), std::map<int, Merchandise>());
     test.push_back(comp);
     //afficherCarte(carte, test);
     std::cout << min(carte) << std::endl;
     std::cout << max(carte) << std::endl;
-    SFMLWindow().print(carte, 4);
+    SFMLWindow().print(carte, 4);*/
 
     return 0;
 
