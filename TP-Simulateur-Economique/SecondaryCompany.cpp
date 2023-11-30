@@ -1,9 +1,15 @@
 #include "SecondaryCompany.hpp"
 
+
+SecondaryCompany::SecondaryCompany(std::vector<Merchandise> _entrant, unsigned int _coutProd)
+{
+	entrant = _entrant;
+	coutProd = _coutProd;
+}
 /**
 *
 **/
-std::vector<Transformation> SecondaryCompany::transform()
+void SecondaryCompany::transform()
 {
 }
 
