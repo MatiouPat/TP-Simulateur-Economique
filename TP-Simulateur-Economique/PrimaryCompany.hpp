@@ -9,11 +9,10 @@ public:
 
 	PrimaryCompany();
 	PrimaryCompany(std::string _name, unsigned int _level, double _capital,
-		std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, std::shared_ptr<Production> _production);
+		std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax);
 	~PrimaryCompany();
-	std::string getName();
+	std::string getName() const override;
 	void addEmployee(Employee _employee);
-
 	void create();
 
 private:
