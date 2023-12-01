@@ -6,6 +6,7 @@
 #include <cmath>
 #include <algorithm>
 
+
 #include "Employee.hpp"
 #include "Company.hpp"
 #include "PrimaryCompany.hpp"
@@ -108,7 +109,6 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& fileNam
 
 int main()
 {
-    
     // 1 case = combien de pixel 
     float scale = 10;
 
@@ -117,7 +117,7 @@ int main()
     Board b(50, 50);
     b.generateMap(0.05f);
 
-    //PrimaryCompany c();
+    //Company c();
     //Company c("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>());
 
     // Creation des Merchandise
@@ -125,10 +125,10 @@ int main()
     Merchandise planche1("Table", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
 
     // Creation des Company
-    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>()));
-    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>()));
-
-    //scierie1.addStock(planche1, 5);
+    std::shared_ptr<PrimaryCompany> scierie1;
+    std::shared_ptr<Production> prodUsine(new Production(std::map<Merchandise, int>{{bois1, 2}}, planche1, scierie1, 0, 0, std::map<Merchandise, int>{{bois1, 1}}, 1));
+    scierie1 = std::shared_ptr<PrimaryCompany>(new PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(), prodUsine));
+    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(),prodUsine));
 
     b.addCompany(scierie1, 1, 2);
     b.addCompany(usineTable1, 6, 6);
@@ -147,12 +147,7 @@ int main()
     
     // Print
     b.printBoard();
-    SFMLWindow win(b, scale, "Carte");
-    //Square s();
-  
-    win.print();
-    
-        
+    SFMLWindow().print(b, scale);
   
     return 0;
 
