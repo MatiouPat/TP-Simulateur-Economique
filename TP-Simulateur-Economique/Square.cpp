@@ -5,7 +5,7 @@
 
 Square::Square()
 {
-    company = std::make_shared<Company>();
+    company = nullptr;
 }
 
 
@@ -13,7 +13,6 @@ Square::Square(int _x, int _y)
 {
     x = _x;
     y = _y;
-    company = std::make_shared<Company>();
     company = nullptr;
 }
 
@@ -24,7 +23,6 @@ Square::Square(int _x, int _y, float _cost, int _heuristic)
     cost = _cost;
     heuristic = _heuristic;
     state = SquareState::UNKNOWN;
-    company = std::make_shared<Company>();
     company = nullptr;
 
 }
@@ -36,7 +34,6 @@ Square::Square(int _x, int _y, float _cost, int _heuristic, SquareState _state)
     cost = _cost;
     heuristic = _heuristic;
     state = _state;
-    company = std::make_shared<Company>();
     company = nullptr;
 
 }

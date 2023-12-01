@@ -32,7 +32,8 @@ SecondaryCompany::SecondaryCompany()
 {
 }
 
-SecondaryCompany::SecondaryCompany(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax) : Company(_name, _level, _capital, _listEmployee, _stock, _stockMax)
+SecondaryCompany::SecondaryCompany(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax)
+	: Company(_name, _level, _capital, _listEmployee, _stock, _stockMax)
 {
 }
 
@@ -45,7 +46,7 @@ SecondaryCompany::~SecondaryCompany()
 /**
 *
 **/
-std::string SecondaryCompany::getName()
+std::string SecondaryCompany::getName() const
 {
 	return name;
 }

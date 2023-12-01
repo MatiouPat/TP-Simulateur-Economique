@@ -108,6 +108,7 @@ std::vector<std::vector<std::string>> importCompanies(const std::string& fileNam
 
 int main()
 {
+    
     // 1 case = combien de pixel 
     float scale = 10;
 
@@ -116,7 +117,7 @@ int main()
     Board b(50, 50);
     b.generateMap(0.05f);
 
-    Company c();
+    //PrimaryCompany c();
     //Company c("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>());
 
     // Creation des Merchandise
