@@ -99,7 +99,16 @@ void SFMLWindow::print()
             int y = val->getY();
             sf::Text text;
             text.setFont(font);
-            text.setString(val->getCompany()->getName());
+            std::shared_ptr<PrimaryCompany> castP = std::dynamic_pointer_cast<PrimaryCompany>(val->getCompany());
+            if (castP)
+            {
+                text.setString(castP->getName());
+            }
+            else 
+            {
+                std::shared_ptr<SecondaryCompany> castS = std::dynamic_pointer_cast<SecondaryCompany>(val->getCompany());
+                text.setString(castS->getName());
+            }
             text.setCharacterSize(12);
             text.setFillColor(sf::Color::Black);
             //text.setStyle(sf::Text::Bold | sf::Text::Underlined);

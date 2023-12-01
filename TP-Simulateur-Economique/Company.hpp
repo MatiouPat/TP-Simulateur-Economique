@@ -29,6 +29,8 @@ public:
 	virtual std::string getName()  const { return "None";};
 	virtual void addEmployee(Employee _employee) {};
 
+	Merchandise getMerchandiseCreated() const;
+
 	// methodes de PrimaryCompany
 	virtual void create() { std::cout << "create called" << std::endl; };
 	// methodes de SecondaryCompany

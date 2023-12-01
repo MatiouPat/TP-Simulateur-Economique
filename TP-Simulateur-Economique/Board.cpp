@@ -50,6 +50,23 @@ Board::~Board()
 
 
 /**
+* Parmi les entreprises presentes sur la carte, on souhaite
+* trouver celle qui produit un certain type de marchandise
+**/
+std::shared_ptr<Company> Board::findSupplier(std::shared_ptr<Merchandise> m) 
+{
+    for (size_t i = 0; i < listCompanies.size(); ++i)
+    {
+        if (listCompanies[i]->getCompany()->getMerchandiseCreated().getName() == m->getName()) 
+        {
+            return listCompanies[i]->getCompany();
+        }
+    }
+    return nullptr;
+}
+
+
+/**
 * Retourne le nombre de ligne de la board
 **/
 int Board::getNbRow()
