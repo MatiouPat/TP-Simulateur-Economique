@@ -116,30 +116,32 @@ int main()
     Board b(50, 50);
     b.generateMap(0.05f);
 
+    Company c();
+    //Company c("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>());
 
     // Creation des Merchandise
     Merchandise bois1("Bois", 100.0f, std::vector<MerchandiseType>(MerchandiseType::RAW));
-    Merchandise planche1("Planche", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
+    Merchandise planche1("Table", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
 
     // Creation des Company
-    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
-    std::shared_ptr<SecondaryCompany> c2 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de bateau", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
-    std::shared_ptr<PrimaryCompany> c3 = std::make_shared<PrimaryCompany>(PrimaryCompany("Ferme a coton", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
-    std::shared_ptr<SecondaryCompany> c4 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de textile", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
-    std::shared_ptr<SecondaryCompany> c5 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<int, Merchandise>()));
+    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>()));
+    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>()));
 
     b.addCompany(scierie1, 1, 2);
-    b.addCompany(c2, 10, 3);
-    b.addCompany(c3, 6, 6);
-    b.addCompany(c4, 5, 17);
-    b.addCompany(c5, 20, 20);
+    b.addCompany(usineTable1, 6, 6);
+ 
+    // Pour verifier le type d'une company 
+    std::shared_ptr<PrimaryCompany> rescierie = std::dynamic_pointer_cast<PrimaryCompany>(b.getSquare(1, 2)->getCompany());
+    if (rescierie) {
+        rescierie->getName(); 
+    }
+
 
 
     // Creation des Transformation
-    Transformation transfo_bois_table(planche1, bois1, *scierie1, 110.0f, 1);
+    Transformation<PrimaryCompany> transfo_bois_table(planche1, bois1, *scierie1, 110.0f, 1);
 
     
-
     // Print
     b.printBoard();
     SFMLWindow().print(b, scale);
