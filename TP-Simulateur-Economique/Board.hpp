@@ -24,6 +24,9 @@ public:
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
     void generateMap(float frequency);
     void printBoard();
+    std::shared_ptr<Company> findSupplier(std::shared_ptr<Merchandise> m);
+
+    void addRound();
 
 protected:
 
@@ -33,7 +36,7 @@ protected:
     float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
 
 private:
-
+    unsigned int round;
     std::vector<std::shared_ptr<Square>> listCompanies;
     int sizeX;
     int sizeY;

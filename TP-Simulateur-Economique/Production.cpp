@@ -26,6 +26,11 @@ std::map<Merchandise, int> Production::getIncoming()
 	return incoming;
 }
 
+Merchandise Production::getOutgoing()
+{
+	return outgoing;
+}
+
 
 //Merchandise Production::getIncomingByID(int n)
 //{

@@ -14,6 +14,7 @@ public:
 	Production(std::map<Merchandise, int> _incoming, Merchandise _outgoing, float _price, unsigned int _dailyProd, std::map<Merchandise,int> _prodCost, unsigned int _employee);
 	~Production();
 	std::map<Merchandise, int> getIncoming();
+	Merchandise getOutgoing();
 	/*Merchandise getIncomingByID(int n);*/
 	std::map<Merchandise, int> getProdCost();
 	Merchandise getOutgoing() const;
