@@ -134,6 +134,7 @@ void SFMLWindow::print()
                 {
                     // Afficher quelque chose dans la console
                     std::cout << "tour passe" << std::endl;
+                    board->addRound();
                 }
             }
 

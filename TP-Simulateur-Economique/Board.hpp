@@ -26,6 +26,8 @@ public:
     void printBoard();
     std::shared_ptr<Company> findSupplier(std::shared_ptr<Merchandise> m);
 
+    void addRound();
+
 protected:
 
     void shiftColumns();
@@ -34,7 +36,7 @@ protected:
     float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
 
 private:
-
+    unsigned int round;
     std::vector<std::shared_ptr<Square>> listCompanies;
     int sizeX;
     int sizeY;
