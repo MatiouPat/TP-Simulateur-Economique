@@ -17,18 +17,17 @@ Company::Company()
     stock = std::map<Merchandise, int>();
 }
 
-Company::Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock) 
+Company::Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, Merchandise _sortant)
 {
     name = _name;
     level = _level;
     capital = _capital;
     listEmployee = _listEmployee;
     stock = _stock;
+    stockMax = _stockMax;
+    sortant = _sortant;
 }
 
 Company::~Company()
 {
 }
-
-
-

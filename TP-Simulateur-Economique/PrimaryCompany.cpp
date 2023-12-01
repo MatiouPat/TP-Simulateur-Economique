@@ -26,4 +26,12 @@ void PrimaryCompany::addEmployee(Employee _employee)
 
 void PrimaryCompany::create()
 {
+	if (pCompany->stock[pCompany->sortant] + 1 <= pCompany->stockMax[pCompany->sortant])
+	{
+		pCompany->stock[pCompany->sortant] += 1;
+	}
+	else
+	{
+		std::cerr << "Outgoing products storage full. " << std::endl;
+	}
 }
