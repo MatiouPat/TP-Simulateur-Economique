@@ -5,31 +5,36 @@
 **/
 void SecondaryCompany::transform()
 {
-	auto getincom = prod->getIncoming();
-	auto curseur = getincom.begin();
-	Merchandise op = curseur->first;
-	//std::cout << op.getName() << curseur->second << std::endl;
-	/*for (int i = 0; i <= size(prod->getIncoming()); i++)
+	bool isPossible = true;
+	for (int i = 0; i < size(prod->getIncoming()); i++)
 	{
-		if (stock[prod->getIncoming()[i]] - prod->getProdCost()[prod->getIncoming()[i]] >= 0) {
-			if (pCompany->stock[pCompany->sortant] + 1 <= pCompany->stockMax[pCompany->sortant])
+		std::map <Merchandise, int> marchandises = prod->getIncoming();
+		auto ressource = marchandises.begin();
+		std::advance(ressource, i);
+
+		if (stock[ressource->first] - ressource->second * prod->getDailyProd() <= 0) {
+			if (stock[prod->getOutgoing()] + prod->getDailyProd() >= stockMax[prod->getOutgoing()] + prod->getDailyProd())
 			{
-				for (int i = 0; i <= size(prod->getIncoming()); i++)
-				{
-					pCompany->stock[pCompany->entrant[i]] -= pCompany->coutProd[pCompany->entrant[i]];
-				}
-				pCompany->stock[pCompany->sortant] += 1;
-			}
-			else
-			{
+				isPossible = isPossible && false;
 				std::cerr << "Outgoing products storage full. " << std::endl;
 			}
-		}
-		else
-		{
+			isPossible = isPossible && false;
 			std::cerr << "Empty storage for incoming products. " << std::endl;
 		}
-	}	*/
+	}
+	if (isPossible)
+	{
+		std::map <Merchandise, int> marchandises = prod->getIncoming();
+		auto ressource = marchandises.begin();
+		while (ressource != marchandises.end())
+		{
+			stock[ressource->first] -= ressource->second * prod->getDailyProd();
+			ressource++;
+		}
+		ressource = marchandises.begin();
+
+		stock[prod->getOutgoing()] += prod->getDailyProd();
+	}
 }
 
 SecondaryCompany::SecondaryCompany()

@@ -123,12 +123,13 @@ int main()
     // Creation des Merchandise
     Merchandise bois1("Bois", 100.0f, std::vector<MerchandiseType>(MerchandiseType::RAW));
     Merchandise planche1("Table", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
+    Merchandise planche2("Table", 120.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
 
     // Creation des Company
-    std::shared_ptr<PrimaryCompany> scierie1;
-    std::shared_ptr<Production> prodUsine(new Production(std::map<Merchandise, int>{{bois1, 2}}, planche1, scierie1, 0, 0, std::map<Merchandise, int>{{bois1, 1}}, 1));
-    scierie1 = std::shared_ptr<PrimaryCompany>(new PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(), prodUsine));
-    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(),prodUsine));
+    std::shared_ptr<Production> prodUsine(new Production(std::map<Merchandise, int>{{bois1, 2}}, planche1, 0, 5, std::map<Merchandise, int>{{bois1, 1}}, 1));
+    std::shared_ptr<PrimaryCompany> scierie1 = std::shared_ptr<PrimaryCompany>(new PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>{{bois1, 20}}, std::map<Merchandise, int>(), prodUsine));
+    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>{{bois1, 20}, { planche1, 0 }}, std::map<Merchandise, int>{{bois1, 20}, { planche1, 0 }}, prodUsine));
+    usineTable1->transform();
 
     //b.addCompany(scierie1, 1, 2);
     //b.addCompany(usineTable1, 6, 6);
@@ -146,10 +147,9 @@ int main()
 
     
     // Print
-    b.printBoard();
+    //b.printBoard();
     SFMLWindow win(b, scale, "Carte");
     win.print();
-
     return 0;
 
 }

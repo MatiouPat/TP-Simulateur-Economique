@@ -7,11 +7,10 @@
 #include "Company.hpp"
 #include "Merchandise.hpp"
 
-Production::Production(std::map<Merchandise, int> _incoming, Merchandise _outgoing, std::shared_ptr<Company> _company, float _price, unsigned int _dailyProd, std::map<Merchandise, int> _prodCost, unsigned int _employee)
+Production::Production(std::map<Merchandise, int> _incoming, Merchandise _outgoing, float _price, unsigned int _dailyProd, std::map<Merchandise, int> _prodCost, unsigned int _employee)
 {
 	incoming = _incoming;
 	outgoing = _outgoing;
-	company = _company;
 	price = _price;
 	dailyProd = _dailyProd;
 	prodCost = _prodCost;
@@ -43,5 +42,15 @@ Merchandise Production::getOutgoing()
 std::map<Merchandise, int> Production::getProdCost()
 {
 	return prodCost;
+}
+
+Merchandise Production::getOutgoing() const
+{
+	return outgoing;
+}
+
+unsigned int Production::getDailyProd() const
+{
+	return dailyProd;
 }
 
