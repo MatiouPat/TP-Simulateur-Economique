@@ -1,32 +1,43 @@
 // Company.cpp
 #pragma once
+// Forward declarations if needed
 
-#include "Square.hpp"
-#include <string>
-#include <vector>
+
 #include <map>
-#include "Employee.hpp"
-#include "Merchandise.hpp"
 
+#include "Employee.hpp" 
+#include "Merchandise.hpp" 
+
+class Square;
+class Employee;
+class Merchandise;
+
+// Abstract class Company
 class Company
 {
 
 public:
 
 	Company();
-	Company(std::string _name, unsigned int _niveau, double _capital, Square _position, std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock);
-	~Company();
-	std::string getName();
-	int getPositionX();
-	int getPositionY();
+	Company(const Company& c) {
+		*this = c;
+	}
+	Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock);
+	virtual ~Company();
+	virtual std::string getName()  const { return "None";};
+	virtual void addEmployee(Employee _employee) {};
+
+	// methodes de PrimaryCompany
+	virtual void create() { std::cout << "create called" << std::endl; };
+	// methodes de SecondaryCompany
 
 
-private:
+protected:
 
 	std::string name;
-	unsigned int niveau;
+	unsigned int level;
 	double capital;
-	Square position;
 	std::vector<Employee> listEmployee;
-	std::map<int, Merchandise> stock;
+	std::map<Merchandise, int> stock;
+
 };

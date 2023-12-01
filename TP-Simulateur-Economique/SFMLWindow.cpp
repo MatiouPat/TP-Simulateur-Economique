@@ -2,6 +2,7 @@
 
 #include "SFMLWindow.hpp"
 #include <SFML/Graphics.hpp>
+#include "Board.hpp"
 
 
 SFMLWindow::SFMLWindow()
@@ -22,19 +23,19 @@ SFMLWindow::~SFMLWindow()
 * @param newMinBound La valeur min que pourra prendre value (apres traitement)
 * @param newMaxBound La valeur max que pourra prendre value (apres traitement)
 **/
-float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound)
+float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound) const
 {
     return  ((value - (minBound)) / (maxBound - (minBound))) * (newMaxBound - newMinBound) + newMinBound;
 }
 
 
 /**
-* Affiche dans une fenetre graphique une matrice de float 
+* Affiche dans une fenetre graphique un board
 **/
-void SFMLWindow::print(std::vector<std::vector<float>> carte, int echelle)
+void SFMLWindow::print(Board b, float echelle) const
 {
-    int n = carte.size();
-    int m = carte.at(0).size();
+    int n = b.getNbRow();
+    int m = b.getNbCol();
     int windowSize = n * echelle;
     int windowSize2 = m * echelle;
     float cellSize = (float)windowSize / n;
@@ -42,6 +43,9 @@ void SFMLWindow::print(std::vector<std::vector<float>> carte, int echelle)
 
     sf::RectangleShape cell;
     cell.setSize(sf::Vector2f(cellSize, cellSize));
+
+    // vector de square (contient les square associé a chaque company de la board)
+    std::vector<Square> vecCompanies;
 
     while (window.isOpen())
     {
@@ -62,46 +66,66 @@ void SFMLWindow::print(std::vector<std::vector<float>> carte, int echelle)
         {
             for (int j = 0; j < m; ++j)
             {
-                //Point p = m.getPointByIndexes(i, j);
 
-                float newValue = scaleValue(carte[i][j],  -3.8, 3.8, 0, 255);
 
+                /* ancien truc
                 cell.setSize(sf::Vector2f(cellSize, cellSize));
                 cell.setPosition(j * cellSize, i * cellSize);
-                //cell.setFillColor(sf::Color::White);
-                //cell.setFillColor(0);
-                //cell.setFillColor(0);
-                window.draw(cell);
+                window.draw(cell);*/
 
-                //std::cout << carte[i][j] << std::endl;
-                sf::Color color;
-                /* white -> blue -> black
-                if (newValue < 255)
+                float newValue = scaleValue(b.getSquare(i, j)->getValue(), -3.8, 3.8, 0, 255);
+
+                cell.setFillColor(sf::Color(80, newValue, 10));
+
+                // affichage de la couleur
+
+                if (newValue<80)
                 {
-                    color = sf::Color(0, 0, newValue);
+                    cell.setFillColor(sf::Color(60, 160, 210));
+
                 }
-                else if (newValue < 510)
+
+                if (b.getSquare(i, j)->isCompany())
                 {
-                    color = sf::Color(0, newValue-255, 255);
+                    vecCompanies.push_back(*(b.getSquare(i,j)));
+                    cell.setFillColor(sf::Color::Red);
                 }
-                else
-                {
-                    color = sf::Color(newValue-510, 255, 255);
-                }*/
-               
-                color = sf::Color(80, newValue, 255);
-
-                cell.setFillColor(color);
-
-
-
-
+                /*ancien truc
                 cell.setSize(sf::Vector2f(cellSize - 20, cellSize - 20));
                 cell.setPosition((j * cellSize + 10), (i * cellSize) + 10);
+                window.draw(cell);*/
+
+                cell.setSize(sf::Vector2f(cellSize, cellSize));
+                cell.setPosition((j * cellSize), (i * cellSize));
                 window.draw(cell);
 
+                
             }
         }
+
+        // afficher les noms des entreprises
+             // affichage des noms des entreprises
+        sf::Font font;
+        if (!font.loadFromFile("Arial.ttf")) {
+            // pb de lecture de la police
+        }
+        for (auto& val : vecCompanies) {
+            int x = val.getX();
+            int y = val.getY();
+            sf::Text text;
+            text.setFont(font);
+            text.setString(val.getCompany()->getName());
+            text.setCharacterSize(24);
+            text.setFillColor(sf::Color::Black);
+            //text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+            text.setPosition(y * cellSize, (x - 1) * cellSize);
+            //text.setPosition(20, 20);
+            window.draw(text);
+        }
+       
+        
+
+
 
         window.display();
     }

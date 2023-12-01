@@ -14,23 +14,43 @@ public:
 
     Board(int _sizeX, int _sizeY);
     Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board);
-    ~Board();
+    ~Board();    
+    int getNbCol();
+    int getNbRow();    
+    template<typename CompanyType>
+    void addCompany(std::shared_ptr<CompanyType> c, int x, int y);
+    std::shared_ptr<Square> getSquare(int i, int j);
     void addChessboardCase(Orientation orientation);
-    void printBoard();
-    void printBoard(std::vector<Company>& entreprises);
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
-    float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
-    std::deque<std::shared_ptr<Square>> neighbours(int squareX, int squareY);
+    void generateMap(float frequency);
+    void printBoard();
 
 protected:
 
     void shiftColumns();
     void shiftLines();
     void shiftLinesAndColumns();
+    float calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, std::shared_ptr<Square> dest);
 
 private:
 
     int sizeX;
     int sizeY;
     std::deque<std::deque<std::shared_ptr<Square>>> board;
+
 };
+
+
+/**
+* Ajoute une company dans le square en position (x, y) dans le board
+*
+* @param c La company que l'on veut ajouter
+* @param x La ligne a laquelle on veut ajouter la company
+* @param y La colonne a laquelle on veut ajouter la company
+**/
+template<typename CompanyType>
+void Board::addCompany(std::shared_ptr<CompanyType> c, int x, int y)
+{
+    board[x][y]->setState(UNTRAVERSABLE);
+    board[x][y]->setCompany(c);
+}

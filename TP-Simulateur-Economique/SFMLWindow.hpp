@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include "Board.hpp"	 
 
 class SFMLWindow 
 {
@@ -9,7 +10,7 @@ public:
 
 	SFMLWindow();
 	~SFMLWindow();
-	void print(std::vector<std::vector<float>> carte, int echelle);
-	float scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound);
+	void print(Board b, float echelle) const;
+	float scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound) const;
 
 };

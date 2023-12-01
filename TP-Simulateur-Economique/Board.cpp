@@ -2,28 +2,38 @@
 #include "Board.hpp"
 
 #include <vector>
+#include "PerlinNoise.hpp"
 
 
+/**
+* Initialisation d'un board de taille _sizeX ligne et _sizeY colonne
+**/
 Board::Board(int _sizeX, int _sizeY)
 {
     sizeX = _sizeX;
     sizeY = _sizeY;
-    board = std::deque<std::deque<std::shared_ptr<Square>>>(_sizeY, std::deque<std::shared_ptr<Square>>(_sizeX));
+
+    board = std::deque<std::deque<std::shared_ptr<Square>>>(_sizeX, std::deque<std::shared_ptr<Square>>(_sizeY));
+
     for (int i = 0; i < board.size(); i++)
     {
         for (int j = 0; j < board[i].size(); j++)
         {
-            board[i][j] = std::shared_ptr<Square>(new Square(i, j, sizeX + sizeY, sizeX + sizeY, SquareState::UNKNOWN));
+            board[i][j] = std::shared_ptr<Square>(new Square(i, j, static_cast<float>(sizeX + sizeY), sizeX + sizeY, SquareState::UNKNOWN));
         }
     }
 }
 
+
+/**
+* Initialise un board a partir d'un autre board
+**/
 Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
 {
-    sizeX = _board.size();
+    sizeX = static_cast<int>(_board.size());
     if (sizeX != 0)
     {
-        sizeY = _board[0].size();
+        sizeY = static_cast<int>(_board[0].size());
     }
     else
     {
@@ -32,9 +42,37 @@ Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
     board = _board;
 }
 
+
 Board::~Board()
 {
 
+}
+
+
+/**
+* Retourne le nombre de ligne de la board
+**/
+int Board::getNbRow()
+{
+    return board.size();
+}
+
+
+/**
+* Retourne le nombre de colonne de la board
+**/
+int Board::getNbCol()
+{
+    return board.at(0).size();
+}
+
+
+/**
+* Retourne le square a la position (i, j) dans la board
+**/
+std::shared_ptr<Square> Board::getSquare(int i, int j)
+{
+    return board[i][j];
 }
 
 
@@ -151,6 +189,7 @@ void Board::addChessboardCase(Orientation orientation)
     }
 }
 
+
 /**
 * Print board in the console
 */
@@ -181,58 +220,15 @@ void Board::printBoard()
     std::cout << '\n' << std::endl;
 }
 
-/**
-* Print board in the console
-*/
-void Board::printBoard(std::vector<Company>& entreprises)
-{
-    for (int x = 0; x < board.size(); x++)
-    {
-        for (int y = 0; y < board[x].size(); y++)
-        {
-            char character;
-
-            auto it = std::find_if(entreprises.begin(), entreprises.end(),
-                [x, y](Company& e) { return e.getPositionX() == x && e.getPositionY() == y; });
-
-            if (it != entreprises.end()) {
-                character = 'E';
-            }
-            else
-            {
-                switch (board[x][y]->getState())
-                {
-                case UNKNOWN:
-                    character = '?';
-                    break;
-                case TRAVERSABLE:
-                    character = 'o';
-                    break;
-                case UNTRAVERSABLE:
-                    character = 'x';
-                    break;
-                }
-            }
-            std::cout << character << ' ';
-        }
-        std::cout << '\n';
-    }
-    std::cout << '\n' << std::endl;
-}
 
 /**
-*
+* 
 **/
 std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int startY, int endX, int endY)
 {
-    board[startX][startY] = std::shared_ptr<Square>(new Square{ startX, startY, 0.0f, 0, SquareState::TRAVERSABLE });
-    board[endX][endY] = std::shared_ptr<Square>(new Square{ endX, endY, float(sizeX + sizeY), sizeX + sizeY,  SquareState::TRAVERSABLE });
-    board[2][1] = std::shared_ptr<Square>(new Square{ 2, 1, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[2][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
-    board[1][2] = std::shared_ptr<Square>(new Square{ 2, 2, float(sizeX + sizeY), sizeX + sizeY,  SquareState::UNTRAVERSABLE });
     std::shared_ptr<Square> cursor = board[startX][startY];
-    std::vector<std::shared_ptr<Square>> squareCalculed;
-    std::vector<std::shared_ptr<Square>> squareVisited;
+    std::vector<std::shared_ptr<Square>> squareCalculed = {};
+    std::vector<std::shared_ptr<Square>> squareVisited = {};
 
     while (cursor->getX() != board[endX][endY]->getX() || cursor->getY() != board[endX][endY]->getY())
     {
@@ -275,6 +271,12 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
                 }
             }
         }
+        
+        /*Si aucun accès possible à l'arrivé, arrêt de la recherche*/
+        if (squareCalculed.size() == 0 && squareVisited.size() == 0)
+        {
+            return {};
+        }
 
         /*Recherche des noeuds visités avec le cout le plus faible*/
         std::shared_ptr<Square> futureNode = squareCalculed[0];
@@ -307,7 +309,7 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
     printBoard();
     while (traveler->getX() != board[endX][endY]->getX() || traveler->getY() != board[endX][endY]->getY())
     {
-        float localCost = sizeX * sizeY;
+        float localCost = static_cast<float>(sizeX * sizeY);
         std::shared_ptr<Square> futureNode;
         /*Recherche du noeud voisin avec le cout le plus faible*/
         for (int i = -1; i < 2; i = i++)
@@ -329,7 +331,6 @@ std::deque < std::shared_ptr<Square>> Board::searchShortestPath(int startX, int 
                 }
             }
         }
-        std::cout << "\n" << std::endl;
         traveler = futureNode;
         path.push_back(futureNode);
     }
@@ -373,53 +374,35 @@ float Board::calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, 
 
 
 /**
-*
+* Definit les state et les value de tous les square de la board
+* en utilisant le bruit de perlin
 **/
-std::deque<std::shared_ptr<Square>> Board::neighbours(int squareX, int squareY)
+void Board::generateMap(float frequency)
 {
-    std::deque<std::shared_ptr<Square>> ptrNeighboursList;
+  
+    PerlinNoise perlinN;
 
-    /*switch (squareX)
+    for (int x = 0; x < board.size(); ++x)
     {
-    case 0:
-        addChessboardCase(NORTH);
-        break;
-    case sizeX:
-        addChessboardCase(SOUTH);
-        break;
-    }
-
-    switch (squareY)
-    {
-    case 0:
-        addChessboardCase(WEST);
-        break;
-    case sizeY:
-        addChessboardCase(EAST);
-        break;
-    }*/
-    std::cout << squareX << ' ' << squareY << std::endl;
-
-    for (int i = -1; i < 2; i = i++)
-    {
-        for (int j = -1; j < 2; j = j++)
+        for (int y = 0; y < board.at(x).size(); ++y)
         {
-            if (squareX + i >= 0 && squareX + i < sizeX && squareY + j >= 0 && squareY + j < sizeY)
+            float bitState = perlinN.perlinNoise2D(x * frequency, y * frequency);
+            std::shared_ptr<Square> square(new Square(x, y, static_cast<float>(x + y), x + y));
+
+            square->setValue(bitState);
+            if (bitState < -0.8)
             {
-                if (board[squareX + i][squareY + j]->getState() != SquareState::UNTRAVERSABLE && squareX + i != squareX && squareY + 1 != squareY)
-                {
-                    ptrNeighboursList.push_back(board[squareX + i][squareY + j]);
-                }
+                square->setState(SquareState::UNTRAVERSABLE);
             }
+            else
+            {
+                square->setState(SquareState::TRAVERSABLE);
+            }
+            board[x][y] = square;
         }
     }
 
-    for (auto& node : ptrNeighboursList)
-    {
-        std::cout << node->getX() << ',' << node->getY() << std::endl;
-    }
-
-    return ptrNeighboursList;
+    
 }
 
 

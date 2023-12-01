@@ -33,5 +33,4 @@
 
 #Visual Studio
 .vs
-x64/*
-**/Debug/*
+/TP-Simulateur-Economique/**

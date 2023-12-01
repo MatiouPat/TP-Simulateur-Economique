@@ -9,7 +9,7 @@ Employee::Employee(unsigned int _salary)
 /**
 * Retourne le salaire d'un employee
 **/
-int Employee::getSalary()
+int Employee::getSalary() const
 {
 	return salary;
 }

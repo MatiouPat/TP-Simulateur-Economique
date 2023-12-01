@@ -9,9 +9,13 @@ class Merchandise
 {
 public:
 
+	Merchandise();
+	Merchandise(std::string _name, float _marketPrice, std::vector<MerchandiseType> _types);
 
 private:
+
 	std::string name;
 	float marketPrice;
-	std::vector<MerchandiseType> type;
+	std::vector<MerchandiseType> types;
+
 };

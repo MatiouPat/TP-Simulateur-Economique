@@ -1,7 +1,11 @@
 #include "Square.hpp"
+#include "Company.hpp"
+#include "SquareState.hpp"
+#include <iostream>
 
 Square::Square()
 {
+    company = std::make_shared<Company>();
 }
 
 
@@ -9,6 +13,8 @@ Square::Square(int _x, int _y)
 {
     x = _x;
     y = _y;
+    company = std::make_shared<Company>();
+    company = nullptr;
 }
 
 Square::Square(int _x, int _y, float _cost, int _heuristic)
@@ -18,6 +24,9 @@ Square::Square(int _x, int _y, float _cost, int _heuristic)
     cost = _cost;
     heuristic = _heuristic;
     state = SquareState::UNKNOWN;
+    company = std::make_shared<Company>();
+    company = nullptr;
+
 }
 
 Square::Square(int _x, int _y, float _cost, int _heuristic, SquareState _state)
@@ -27,6 +36,9 @@ Square::Square(int _x, int _y, float _cost, int _heuristic, SquareState _state)
     cost = _cost;
     heuristic = _heuristic;
     state = _state;
+    company = std::make_shared<Company>();
+    company = nullptr;
+
 }
 
 Square::~Square()
@@ -35,7 +47,7 @@ Square::~Square()
 }
 
 
-int Square::getX()
+int Square::getX() const
 {
     return x;
 }
@@ -47,19 +59,19 @@ void Square::setX(int _x)
 }
 
 
-int Square::getY()
+int Square::getY() const
 {
     return y;
 }
 
 
-void Square::setY(int _y)
+void Square::setY(int _y) 
 {
     y = _y;
 }
 
 
-int Square::getHeuristic()
+int Square::getHeuristic() const 
 {
     return heuristic;
 }
@@ -71,7 +83,7 @@ void Square::setHeuristic(int _heuristic)
 }
 
 
-float Square::getCost()
+float Square::getCost() const
 {
     return cost;
 }
@@ -83,7 +95,7 @@ void Square::setCost(float _cost)
 }
 
 
-SquareState Square::getState()
+SquareState Square::getState() const
 {
     return state;
 }
@@ -91,4 +103,32 @@ SquareState Square::getState()
 void Square::setState(SquareState _state)
 {
     state = _state;
+}
+
+std::shared_ptr<Company> Square::getCompany() const
+{
+    return company;
+}
+
+void Square::setCompany(std::shared_ptr<Company> c)
+{
+    company = c;
+}
+bool Square::isCompany() const
+{
+    if (company != nullptr)
+    {
+        return true;
+    }
+    return false;
+}
+
+float Square::getValue() const
+{
+    return value;
+}
+
+void Square::setValue(float _value)
+{
+    value = _value;
 }
