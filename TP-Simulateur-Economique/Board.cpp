@@ -10,6 +10,7 @@
 **/
 Board::Board(int _sizeX, int _sizeY)
 {
+    round = 1;
     sizeX = _sizeX;
     sizeY = _sizeY;
 
@@ -30,6 +31,8 @@ Board::Board(int _sizeX, int _sizeY)
 **/
 Board::Board(std::deque<std::deque<std::shared_ptr<Square>>>& _board)
 {
+    round = 1;
+
     sizeX = static_cast<int>(_board.size());
     if (sizeX != 0)
     {
@@ -63,6 +66,38 @@ std::shared_ptr<Company> Board::findSupplier(std::shared_ptr<Merchandise> m)
         }
     }
     return nullptr;
+}
+
+
+/**
+* Methode permettant de passer un tour
+**/
+void Board::addRound()
+{
+    std::cout << "Debut du tour " << round << std::endl;
+    for (size_t i = 0; i < listCompanies.size(); ++i)
+    {
+        std::shared_ptr<PrimaryCompany> ptrPrimaryCompany = std::dynamic_pointer_cast<PrimaryCompany>(listCompanies[i]->getCompany());
+        if (ptrPrimaryCompany)
+        {
+            // La company est de type primary
+            ptrPrimaryCompany->create();
+        }
+        else 
+        {
+            std::shared_ptr<SecondaryCompany> ptrSecondaryCompany = std::dynamic_pointer_cast<SecondaryCompany>(listCompanies[i]->getCompany());
+            if (ptrSecondaryCompany)
+            {
+                // La company est de type secondary
+                ptrSecondaryCompany->buy();
+            }
+            else 
+            {
+                // La company nest ni de type primary ni secondary
+            }
+        }
+    }
+    round++;
 }
 
 

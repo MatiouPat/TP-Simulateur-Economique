@@ -130,8 +130,8 @@ int main()
     scierie1 = std::shared_ptr<PrimaryCompany>(new PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(), prodUsine));
     std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>(),prodUsine));
 
-    b.addCompany(scierie1, 1, 2);
-    b.addCompany(usineTable1, 6, 6);
+    //b.addCompany(scierie1, 1, 2);
+    //b.addCompany(usineTable1, 6, 6);
  
     // Pour verifier le type d'une company 
     std::shared_ptr<PrimaryCompany> rescierie = std::dynamic_pointer_cast<PrimaryCompany>(b.getSquare(1, 2)->getCompany());
