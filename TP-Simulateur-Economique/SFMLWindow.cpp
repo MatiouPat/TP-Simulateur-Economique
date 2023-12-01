@@ -115,7 +115,7 @@ void SFMLWindow::print(Board b, float echelle) const
             sf::Text text;
             text.setFont(font);
             text.setString(val.getCompany()->getName());
-            text.setCharacterSize(24);
+            text.setCharacterSize(12);
             text.setFillColor(sf::Color::Black);
             //text.setStyle(sf::Text::Bold | sf::Text::Underlined);
             text.setPosition(y * cellSize, (x - 1) * cellSize);

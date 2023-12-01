@@ -22,7 +22,7 @@ public:
 	Company(const Company& c) {
 		*this = c;
 	}
-	Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock);
+	Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax);
 	virtual ~Company();
 	virtual std::string getName()  const { return "None";};
 	virtual void addEmployee(Employee _employee) {};
@@ -39,5 +39,6 @@ protected:
 	double capital;
 	std::vector<Employee> listEmployee;
 	std::map<Merchandise, int> stock;
+	std::map<Merchandise, int> stockMax;
 
 };

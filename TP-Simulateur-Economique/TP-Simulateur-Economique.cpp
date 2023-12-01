@@ -124,8 +124,8 @@ int main()
     Merchandise planche1("Table", 100.0f, std::vector<MerchandiseType>(MerchandiseType::CONSUMMABLE));
 
     // Creation des Company
-    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>()));
-    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>()));
+    std::shared_ptr<PrimaryCompany> scierie1 = std::make_shared<PrimaryCompany>(PrimaryCompany("Scierie", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>()));
+    std::shared_ptr<SecondaryCompany> usineTable1 = std::make_shared<SecondaryCompany>(SecondaryCompany("Usine de meuble", 1, 1000, std::vector<Employee>(), std::map<Merchandise, int>(), std::map<Merchandise, int>()));
 
     b.addCompany(scierie1, 1, 2);
     b.addCompany(usineTable1, 6, 6);

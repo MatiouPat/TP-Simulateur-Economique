@@ -9,7 +9,7 @@ public:
 
 	PrimaryCompany();
 	PrimaryCompany(std::string _name, unsigned int _level, double _capital,
-		std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock);
+		std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax);
 	~PrimaryCompany();
 	std::string getName();
 	void addEmployee(Employee _employee);
