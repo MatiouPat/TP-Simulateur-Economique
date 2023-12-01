@@ -15,12 +15,7 @@ Merchandise::Merchandise(std::string _name, float _marketPrice, std::vector<Merc
 	types = _types;
 }
 
-float Merchandise::getMarketPrice() const
-{
-	return marketPrice;
-}
-
-std::string Merchandise::getName() const
+std::string Merchandise::getName() 
 {
 	return name;
 }

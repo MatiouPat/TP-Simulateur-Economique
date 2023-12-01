@@ -31,17 +31,3 @@ Company::Company(std::string _name, unsigned int _level, double _capital, std::v
 Company::~Company()
 {
 }
-
-void Company::print()
-{
-    std::cout << name << std::endl;
-    std::cout << "\tNiveau : " << level << std::endl;
-    std::cout << "\tCapital : " << capital << std::endl;
-    std::cout << "\tStocke : " << std::endl;
-    for (auto& s : stock) {
-        Merchandise m(s.first);
-        std::cout << "\t\tMarchandise : " << m.getName() << ", Nombre : " << s.second << std::endl;
-    }
-    std::cout << std::endl;
-
-}

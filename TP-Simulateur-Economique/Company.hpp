@@ -32,7 +32,7 @@ public:
 	// methodes de PrimaryCompany
 	virtual void create() { std::cout << "create called" << std::endl; };
 	// methodes de SecondaryCompany
-	void print();
+
 
 protected:
 
