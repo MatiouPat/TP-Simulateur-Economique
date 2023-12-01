@@ -23,7 +23,7 @@ SFMLWindow::~SFMLWindow()
 * @param newMinBound La valeur min que pourra prendre value (apres traitement)
 * @param newMaxBound La valeur max que pourra prendre value (apres traitement)
 **/
-float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound)
+float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound) const
 {
     return  ((value - (minBound)) / (maxBound - (minBound))) * (newMaxBound - newMinBound) + newMinBound;
 }
@@ -32,7 +32,7 @@ float SFMLWindow::scaleValue(float value, float minBound, float maxBound, float 
 /**
 * Affiche dans une fenetre graphique un board
 **/
-void SFMLWindow::print(Board b, int echelle)
+void SFMLWindow::print(Board b, float echelle) const
 {
     int n = b.getNbRow();
     int m = b.getNbCol();

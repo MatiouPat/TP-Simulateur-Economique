@@ -47,7 +47,7 @@ Square::~Square()
 }
 
 
-int Square::getX()
+int Square::getX() const
 {
     return x;
 }
@@ -59,19 +59,19 @@ void Square::setX(int _x)
 }
 
 
-int Square::getY()
+int Square::getY() const
 {
     return y;
 }
 
 
-void Square::setY(int _y)
+void Square::setY(int _y) 
 {
     y = _y;
 }
 
 
-int Square::getHeuristic()
+int Square::getHeuristic() const 
 {
     return heuristic;
 }
@@ -83,7 +83,7 @@ void Square::setHeuristic(int _heuristic)
 }
 
 
-float Square::getCost()
+float Square::getCost() const
 {
     return cost;
 }
@@ -95,7 +95,7 @@ void Square::setCost(float _cost)
 }
 
 
-SquareState Square::getState()
+SquareState Square::getState() const
 {
     return state;
 }
@@ -105,7 +105,7 @@ void Square::setState(SquareState _state)
     state = _state;
 }
 
-std::shared_ptr<Company> Square::getCompany()
+std::shared_ptr<Company> Square::getCompany() const
 {
     return company;
 }
@@ -114,7 +114,7 @@ void Square::setCompany(std::shared_ptr<Company> c)
 {
     company = c;
 }
-bool Square::isCompany()
+bool Square::isCompany() const
 {
     if (company != nullptr)
     {
@@ -123,7 +123,7 @@ bool Square::isCompany()
     return false;
 }
 
-float Square::getValue()
+float Square::getValue() const
 {
     return value;
 }
