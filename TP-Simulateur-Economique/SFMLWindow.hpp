@@ -10,7 +10,7 @@ public:
 
 	SFMLWindow();
 	~SFMLWindow();
-	void print(Board b, int echelle);
-	float scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound);
+	void print(Board b, float echelle) const;
+	float scaleValue(float value, float minBound, float maxBound, float newMinBound, float newMaxBound) const;
 
 };

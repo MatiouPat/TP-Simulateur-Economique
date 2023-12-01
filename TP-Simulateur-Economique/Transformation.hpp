@@ -4,20 +4,35 @@
 #include "Merchandise.hpp"
 #include "Company.hpp"
 
+template <typename CompanyType>
 class Transformation
 {
 
 public:
 
-	Transformation(Merchandise merchandiseProduced, Merchandise merchandiseNeeded, Company company, float sellPrice, unsigned int prodByWeek);
+	Transformation(Merchandise _merchandiseProduced, Merchandise _merchandiseNeeded, CompanyType _company, float _sellPrice, unsigned int _prodByWeek);
 
 private:
 
 	Merchandise merchandiseProduced;
 	Merchandise merchandiseNeeded;
-	Company company;
+	CompanyType company;
 	float sellPrice;
 	unsigned int prodByWeek;
 
 
 };
+
+
+/**
+*
+**/
+template<typename CompanyType>
+inline Transformation<CompanyType>::Transformation(Merchandise _merchandiseProduced, Merchandise _merchandiseNeeded, CompanyType _company, float _sellPrice, unsigned int _prodByWeek)
+{
+	merchandiseProduced = _merchandiseProduced;
+	merchandiseNeeded = _merchandiseNeeded;
+	company = _company;
+	sellPrice = _sellPrice;
+	prodByWeek = _prodByWeek;
+}

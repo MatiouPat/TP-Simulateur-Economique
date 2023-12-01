@@ -17,13 +17,13 @@ public:
     ~Board();    
     int getNbCol();
     int getNbRow();    
-    void addCompany(std::shared_ptr<Company> c, int x, int y);
+    template<typename CompanyType>
+    void addCompany(std::shared_ptr<CompanyType> c, int x, int y);
     std::shared_ptr<Square> getSquare(int i, int j);
     void addChessboardCase(Orientation orientation);
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
     void generateMap(float frequency);
     void printBoard();
-    void printBoard(std::vector<Company>& entreprises);
 
 protected:
 
@@ -39,3 +39,18 @@ private:
     std::deque<std::deque<std::shared_ptr<Square>>> board;
 
 };
+
+
+/**
+* Ajoute une company dans le square en position (x, y) dans le board
+*
+* @param c La company que l'on veut ajouter
+* @param x La ligne a laquelle on veut ajouter la company
+* @param y La colonne a laquelle on veut ajouter la company
+**/
+template<typename CompanyType>
+void Board::addCompany(std::shared_ptr<CompanyType> c, int x, int y)
+{
+    board[x][y]->setState(UNTRAVERSABLE);
+    board[x][y]->setCompany(c);
+}

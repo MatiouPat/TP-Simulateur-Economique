@@ -9,7 +9,7 @@ class Employee
 public:
 
 	Employee(unsigned int _salary);
-	int getSalary();
+	int getSalary() const;
 
 private:
 
