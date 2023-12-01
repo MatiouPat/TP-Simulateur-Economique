@@ -9,11 +9,23 @@ class SecondaryCompany : public Company
 public:
 
 	SecondaryCompany();
-	SecondaryCompany(std::string _name, unsigned int _niveau, double _capital, 
-		std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock);
-
+	SecondaryCompany(std::string _name, unsigned int _level, double _capital,
+		std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock);
+	~SecondaryCompany();
+	std::string getName();
+	void addEmployee(Employee _employee);
 	void transform();
 	void buy();
-	Company findSupplier(Transformation transfo);
+	template <typename CompanyType>
+	Company findSupplier(Transformation<CompanyType> transfo);
 
 };
+
+/**
+*
+**/
+template <typename CompanyType>
+Company SecondaryCompany::findSupplier(Transformation<CompanyType> transfo)
+{
+	return Company();
+}

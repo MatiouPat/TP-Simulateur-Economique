@@ -372,19 +372,6 @@ float Board::calculCost(std::shared_ptr<Square> s1, std::shared_ptr<Square> s2, 
     }
 }
 
-/**
-* Ajoute une company dans le square en position (x, y) dans le board
-* 
-* @param c La company que l'on veut ajouter
-* @param x La ligne a laquelle on veut ajouter la company
-* @param y La colonne a laquelle on veut ajouter la company
-**/
-void Board::addCompany(std::shared_ptr<Company> c, int x, int y)
-{
-    board[x][y]->setState(UNTRAVERSABLE);
-    board[x][y]->setCompany(c);
-}
-
 
 /**
 * Definit les state et les value de tous les square de la board

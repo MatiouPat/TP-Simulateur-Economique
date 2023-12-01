@@ -18,21 +18,26 @@ class Company
 
 public:
 
-	virtual ~Company();  
-	virtual std::string getName() = 0;  
-	virtual void addEmployee(Employee _employee) = 0;  
+	Company();
+	Company(const Company& c) {
+		*this = c;
+	}
+	Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock);
+	virtual ~Company();
+	virtual std::string getName()  const { return "None";};
+	virtual void addEmployee(Employee _employee) {};
+
+	// methodes de PrimaryCompany
+	virtual void create() { std::cout << "create called" << std::endl; };
+	// methodes de SecondaryCompany
+
 
 protected:
 
-	Company();
-	Company(std::string _name, unsigned int _niveau, double _capital, std::vector<Employee> _listEmployee, std::map<int, Merchandise> _stock);
-
-private:
-
 	std::string name;
-	unsigned int niveau;
+	unsigned int level;
 	double capital;
 	std::vector<Employee> listEmployee;
-	std::map<int, Merchandise> stock;
+	std::map<Merchandise, int> stock;
 
 };
