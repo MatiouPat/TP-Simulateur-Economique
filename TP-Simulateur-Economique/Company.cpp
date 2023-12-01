@@ -30,3 +30,12 @@ Company::Company(std::string _name, unsigned int _level, double _capital, std::v
 Company::~Company()
 {
 }
+
+void Company::addEmployee(Employee _employee)
+{
+}
+
+void Company::levelUp()
+{
+    level++;
+}

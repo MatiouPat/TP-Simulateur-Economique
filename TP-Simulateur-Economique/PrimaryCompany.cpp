@@ -13,7 +13,7 @@ PrimaryCompany::~PrimaryCompany() {
 
 }
 
-std::string PrimaryCompany::getName()
+std::string PrimaryCompany::getName() const
 {
 	return name;
 }

@@ -4,7 +4,8 @@
 #include <iostream>
 #include "SquareState.hpp"
 #include "Company.hpp"
-#include "Company.hpp"
+#include "PrimaryCompany.hpp"
+#include "SecondaryCompany.hpp"
 
 
 /**

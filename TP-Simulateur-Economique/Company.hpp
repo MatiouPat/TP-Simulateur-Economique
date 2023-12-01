@@ -23,14 +23,10 @@ public:
 		*this = c;
 	}
 	Company(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax);
-	virtual ~Company();
-	virtual std::string getName()  const { return "None";};
-	virtual void addEmployee(Employee _employee) {};
-
-	// methodes de PrimaryCompany
-	virtual void create() { std::cout << "create called" << std::endl; };
-	// methodes de SecondaryCompany
-
+	~Company();
+	virtual std::string getName() const = 0;
+	void addEmployee(Employee _employee);
+	void levelUp();
 
 protected:
 

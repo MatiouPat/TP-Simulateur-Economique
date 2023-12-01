@@ -199,7 +199,7 @@ void Board::printBoard()
     {
         for (int y = 0; y < board[x].size(); y++)
         {
-            char character;
+            char character{};
 
             switch (board[x][y]->getState())
             {
