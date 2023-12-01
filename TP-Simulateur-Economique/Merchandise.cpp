@@ -14,3 +14,8 @@ Merchandise::Merchandise(std::string _name, float _marketPrice, std::vector<Merc
 	marketPrice = _marketPrice;
 	types = _types;
 }
+
+std::string Merchandise::getName() 
+{
+	return name;
+}

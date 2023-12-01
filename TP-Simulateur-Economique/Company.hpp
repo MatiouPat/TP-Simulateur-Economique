@@ -27,6 +27,7 @@ public:
 	virtual std::string getName() const = 0;
 	void addEmployee(Employee _employee);
 	void levelUp();
+	void print();
 
 protected:
 
