@@ -6,6 +6,7 @@
 #include <map>
 #include "Employee.hpp"
 #include "Merchandise.hpp"
+#include "Production.hpp"
 
 
 Company::Company()
