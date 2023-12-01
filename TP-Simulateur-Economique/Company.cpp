@@ -32,6 +32,16 @@ Company::~Company()
 {
 }
 
+/**
+* Retourne la marchandise que cree la company
+* exemple une scierie qui produit bois -> planche renverra des planches
+**/
+Merchandise Company::getMerchandiseCreated() const
+{
+
+    return prod->getOutgoing();
+}
+
 void Company::print()
 {
     std::cout << name << std::endl;

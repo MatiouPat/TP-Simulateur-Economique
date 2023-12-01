@@ -24,6 +24,7 @@ public:
     std::deque <std::shared_ptr<Square>> searchShortestPath(int startX, int startY, int endX, int endY);
     void generateMap(float frequency);
     void printBoard();
+    std::shared_ptr<Company> findSupplier(std::shared_ptr<Merchandise> m);
 
 protected:
 

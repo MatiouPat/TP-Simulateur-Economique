@@ -17,16 +17,6 @@ public:
 	void addEmployee(Employee _employee);
 	void transform();
 	void buy();
-	template <typename CompanyType>
-	Company findSupplier(Transformation<CompanyType> transfo);
 
 };
 
-/**
-*
-**/
-template <typename CompanyType>
-Company SecondaryCompany::findSupplier(Transformation<CompanyType> transfo)
-{
-	return Company();
-}
