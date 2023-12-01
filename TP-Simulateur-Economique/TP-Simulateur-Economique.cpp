@@ -147,8 +147,8 @@ int main()
     
     // Print
     b.printBoard();
-    SFMLWindow().print(b, scale);
-  
+    SFMLWindow win(b, scale, "Carte");
+
     return 0;
 
 }
