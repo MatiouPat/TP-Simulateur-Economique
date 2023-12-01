@@ -34,6 +34,7 @@ protected:
 
 private:
 
+    std::vector<std::shared_ptr<Square>> listCompanies;
     int sizeX;
     int sizeY;
     std::deque<std::deque<std::shared_ptr<Square>>> board;
@@ -53,4 +54,6 @@ void Board::addCompany(std::shared_ptr<CompanyType> c, int x, int y)
 {
     board[x][y]->setState(UNTRAVERSABLE);
     board[x][y]->setCompany(c);
+
+    listCompanies.push_back(board[x][y]);
 }
