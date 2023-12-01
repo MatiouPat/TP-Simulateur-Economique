@@ -7,6 +7,7 @@
 
 #include "Employee.hpp" 
 #include "Merchandise.hpp" 
+#include "Production.hpp"
 
 class Square;
 class Employee;
