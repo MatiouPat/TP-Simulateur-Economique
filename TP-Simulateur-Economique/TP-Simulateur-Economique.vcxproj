@@ -145,6 +145,7 @@
     <ClCompile Include="Merchandise.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="PrimaryCompany.cpp" />
+    <ClCompile Include="Production.cpp" />
     <ClCompile Include="SecondaryCompany.cpp" />
     <ClCompile Include="SFMLWindow.cpp" />
     <ClCompile Include="Square.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Orientation.hpp" />
     <ClInclude Include="PerlinNoise.hpp" />
     <ClInclude Include="PrimaryCompany.hpp" />
+    <ClInclude Include="Production.hpp" />
     <ClInclude Include="SecondaryCompany.hpp" />
     <ClInclude Include="SFMLWindow.hpp" />
     <ClInclude Include="Square.hpp" />
