@@ -3,18 +3,14 @@
 /**
 *
 **/
-void SecondaryCompany::transform()
+void SecondaryCompany::transform(Company* pCompany)
 {
-	auto getincom = prod->getIncoming();
-	auto curseur = getincom.begin();
-	Merchandise op = curseur->first;
-	//std::cout << op.getName() << curseur->second << std::endl;
-	/*for (int i = 0; i <= size(prod->getIncoming()); i++)
+	/*for (int i = 0; i <= size(pCompany->entrant); i++)
 	{
-		if (stock[prod->getIncoming()[i]] - prod->getProdCost()[prod->getIncoming()[i]] >= 0) {
+		if (pCompany->stock[pCompany->entrant[i]] - pCompany->coutProd[pCompany->entrant[i]] >= 0) {
 			if (pCompany->stock[pCompany->sortant] + 1 <= pCompany->stockMax[pCompany->sortant])
 			{
-				for (int i = 0; i <= size(prod->getIncoming()); i++)
+				for (int i = 0, i <= size(pCompany->entrant), i++)
 				{
 					pCompany->stock[pCompany->entrant[i]] -= pCompany->coutProd[pCompany->entrant[i]];
 				}
@@ -36,7 +32,8 @@ SecondaryCompany::SecondaryCompany()
 {
 }
 
-SecondaryCompany::SecondaryCompany(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax, std::shared_ptr<Production> _production) : Company(_name, _level, _capital, _listEmployee, _stock, _stockMax, _production)
+SecondaryCompany::SecondaryCompany(std::string _name, unsigned int _level, double _capital, std::vector<Employee> _listEmployee, std::map<Merchandise, int> _stock, std::map<Merchandise, int> _stockMax)
+	: Company(_name, _level, _capital, _listEmployee, _stock, _stockMax)
 {
 }
 
@@ -49,7 +46,7 @@ SecondaryCompany::~SecondaryCompany()
 /**
 *
 **/
-std::string SecondaryCompany::getName()
+std::string SecondaryCompany::getName() const
 {
 	return name;
 }
